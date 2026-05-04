@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📋 Simulado — Português 9º Ano — AV3</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Kalam:wght@400;700&family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f1729;--card:#1a2540;--card2:#1e2d4a;--borda:#2a3f6e;--texto:#e0e8f5;--texto2:#8899bb;--texto3:#556688;--ciano:#00d4ff;--magenta:#ff2d95;--amarelo:#ffd23f;--verde:#00e676;--vermelho:#ff4757;--roxo:#a855f7;--sombra:0 2px 16px rgba(0,0,0,0.4);--raio:10px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);font-family:'Nunito Sans',sans-serif;color:var(--texto);min-height:100vh;padding-bottom:80px;
+background-image:repeating-linear-gradient(135deg,transparent,transparent 40px,rgba(0,212,255,0.02) 40px,rgba(0,212,255,0.02) 41px);}
+.header{background:linear-gradient(135deg,#0a0f1e,#152040 60%,#1a2850);padding:28px 20px 22px;text-align:center;position:relative;overflow:hidden;}
+.header::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 30% 50%,rgba(0,212,255,0.08),transparent 50%),radial-gradient(circle at 70% 50%,rgba(255,45,149,0.06),transparent 50%);}
+.header-inner{position:relative;z-index:1;}
+.header-badge{display:inline-block;background:rgba(0,230,118,0.15);border:1px solid rgba(0,230,118,0.3);color:var(--verde);font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;padding:4px 18px;border-radius:20px;margin-bottom:12px;}
+.header h1{font-family:'Rajdhani',sans-serif;font-size:clamp(22px,5vw,32px);font-weight:700;color:#fff;}
+.header h1 span{color:var(--verde);}
+.header p{font-family:'Kalam',cursive;color:rgba(255,255,255,0.5);font-size:14px;margin-top:6px;}
+.header .meta{font-size:12px;color:var(--texto3);margin-top:4px;}
+
+.prog{position:sticky;top:0;z-index:100;background:rgba(15,23,41,0.95);backdrop-filter:blur(10px);padding:10px 16px;border-bottom:1px solid var(--borda);display:flex;align-items:center;gap:10px;}
+.prog-text{font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;color:var(--texto2);white-space:nowrap;}
+.prog-bar{flex:1;height:6px;background:var(--card2);border-radius:3px;overflow:hidden;}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--verde),var(--ciano));border-radius:3px;transition:width .5s;width:0;}
+.prog-pct{font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;color:var(--verde);}
+
+.result-bar{display:none;position:sticky;top:0;z-index:100;background:rgba(15,23,41,0.95);backdrop-filter:blur(10px);padding:12px 16px;border-bottom:1px solid var(--borda);text-align:center;}
+.result-bar.show{display:block;}
+.result-bar span{font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:700;}
+.result-bar .nota{color:var(--ciano);}
+.result-bar .codigo{color:var(--amarelo);margin-left:12px;}
+
+.container{max-width:750px;margin:0 auto;padding:16px;}
+.questao{background:var(--card);border-radius:var(--raio);padding:18px;margin-bottom:14px;box-shadow:var(--sombra);border-left:4px solid var(--borda);transition:border-color .3s;}
+.questao.respondida{border-left-color:var(--verde);}
+.questao.shake{animation:shake .5s;}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+.q-header{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px;}
+.q-num{min-width:32px;height:32px;border-radius:50%;background:var(--card2);border:2px solid var(--borda);display:flex;align-items:center;justify-content:center;font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;color:var(--texto3);flex-shrink:0;}
+.questao.respondida .q-num{background:var(--verde);border-color:var(--verde);color:#fff;}
+.q-text{font-size:15px;font-weight:600;line-height:1.6;flex:1;}
+
+.alt{display:flex;width:100%;padding:11px 14px;margin-bottom:6px;border:2px solid var(--borda);border-radius:8px;background:transparent;color:var(--texto);font-family:'Nunito Sans',sans-serif;font-size:14px;text-align:left;cursor:pointer;transition:all .2s;align-items:center;gap:10px;}
+.alt:hover{border-color:var(--verde);background:rgba(0,230,118,0.06);}
+.alt.selected{border-color:var(--verde);background:rgba(0,230,118,0.12);}
+.alt:disabled{cursor:default;}
+.alt:disabled:hover{border-color:var(--borda);background:transparent;}
+.alt .letra{min-width:24px;height:24px;border-radius:50%;background:var(--card2);display:flex;align-items:center;justify-content:center;font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:700;color:var(--texto3);flex-shrink:0;}
+.alt.selected .letra{background:var(--verde);color:#fff;}
+
+.alt.correta{border-color:var(--verde)!important;background:rgba(0,230,118,0.1)!important;}
+.alt.correta .letra{background:var(--verde)!important;color:#fff!important;}
+.alt.errada-escolhida{border-color:var(--vermelho)!important;background:rgba(255,71,87,0.1)!important;}
+.alt.errada-escolhida .letra{background:var(--vermelho)!important;color:#fff!important;}
+.feedback{display:none;margin-top:10px;padding:12px;border-radius:8px;font-size:13px;line-height:1.6;}
+.feedback.show{display:block;animation:fadeIn .4s;}
+.feedback.fb-ok{background:rgba(0,230,118,0.08);border:1px solid rgba(0,230,118,0.2);}
+.feedback.fb-ok .fb-title{color:var(--verde);font-weight:700;}
+.feedback.fb-err{background:rgba(255,71,87,0.08);border:1px solid rgba(255,71,87,0.2);}
+.feedback.fb-err .fb-title{color:var(--vermelho);font-weight:700;}
+.feedback p{margin-top:6px;}
+.feedback strong{color:var(--ciano);}
+
+.btn-bar{position:fixed;bottom:0;left:0;right:0;background:rgba(15,23,41,0.95);backdrop-filter:blur(10px);padding:12px 16px;border-top:1px solid var(--borda);text-align:center;z-index:100;}
+.btn-enviar{padding:12px 40px;border:none;border-radius:8px;background:linear-gradient(135deg,var(--verde),var(--ciano));color:#0f1729;font-family:'Rajdhani',sans-serif;font-size:17px;font-weight:700;letter-spacing:1px;cursor:pointer;transition:opacity .3s;}
+.btn-enviar:disabled{opacity:.3;cursor:not-allowed;}
+
+.overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:200;align-items:center;justify-content:center;padding:20px;}
+.overlay.show{display:flex;}
+.overlay-card{background:var(--card);border-radius:16px;padding:30px 24px;text-align:center;max-width:400px;width:100%;box-shadow:0 10px 40px rgba(0,0,0,0.5);}
+.ov-emoji{font-size:48px;margin-bottom:10px;}
+.ov-titulo{font-family:'Rajdhani',sans-serif;font-size:24px;font-weight:700;color:#fff;margin-bottom:6px;}
+.ov-nota{font-family:'Rajdhani',sans-serif;font-size:40px;font-weight:700;color:var(--verde);margin-bottom:4px;}
+.ov-msg{font-size:15px;color:var(--texto2);margin-bottom:16px;}
+.ov-codigo-label{font-size:12px;color:var(--texto3);margin-bottom:4px;}
+.ov-codigo{font-family:'Rajdhani',sans-serif;font-size:28px;font-weight:700;color:var(--amarelo);letter-spacing:3px;background:rgba(255,210,63,0.1);border:1px dashed var(--amarelo);border-radius:8px;padding:8px 16px;display:inline-block;margin-bottom:16px;}
+.ov-info{font-size:11px;color:var(--texto3);margin-bottom:16px;}
+.btn-fechar{padding:10px 30px;border:2px solid var(--borda);border-radius:8px;background:transparent;color:var(--texto);font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:700;cursor:pointer;}
+.btn-fechar:hover{border-color:var(--ciano);color:var(--ciano);}
+
+.trava{display:none;background:var(--card);border-radius:var(--raio);padding:20px;text-align:center;margin-bottom:16px;box-shadow:var(--sombra);}
+.trava.show{display:block;animation:fadeIn .4s;}
+.trava h3{font-family:'Rajdhani',sans-serif;font-size:20px;color:var(--amarelo);margin-bottom:12px;}
+.trava input{padding:10px 14px;border:2px solid var(--borda);border-radius:8px;background:rgba(0,0,0,0.3);color:var(--texto);font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:700;letter-spacing:3px;text-align:center;width:220px;text-transform:uppercase;}
+.trava input:focus{outline:none;border-color:var(--amarelo);}
+.trava .btn-liberar{margin-top:10px;padding:10px 24px;border:none;border-radius:8px;background:var(--amarelo);color:#1a1400;font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:700;cursor:pointer;display:block;margin-left:auto;margin-right:auto;}
+.trava .msg-erro{color:var(--vermelho);font-size:13px;margin-top:8px;display:none;}
+
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:500px){.overlay-card{padding:24px 18px;}.ov-nota{font-size:32px;}.q-text{font-size:14px;}}
+</style>
+</head>
+<body>
+
+<div class="header">
+<div class="header-inner">
+<div class="header-badge">Simulado • 20 Questões</div>
+<h1>Língua Portuguesa — <span>AV3</span></h1>
+<p>9º ano • Avaliação Mensal 3</p>
+<div class="meta">Meta: 70% (14 acertos) • Questões embaralhadas</div>
+</div>
+</div>
+
+<div class="prog" id="progBar">
+<div class="prog-text" id="progText">0 de 20 respondidas</div>
+<div class="prog-bar"><div class="prog-fill" id="progFill"></div></div>
+<div class="prog-pct" id="progPct">0%</div>
+</div>
+
+<div class="result-bar" id="resultBar">
+<span class="nota" id="rbNota"></span>
+<span class="codigo" id="rbCodigo"></span>
+</div>
+
+<div class="container" id="quizContainer"></div>
+
+<div class="btn-bar" id="btnBar">
+<button class="btn-enviar" id="btnEnviar" disabled onclick="enviar()">Enviar Respostas</button>
+</div>
+
+<div class="overlay" id="overlay">
+<div class="overlay-card">
+<div class="ov-emoji" id="ovEmoji"></div>
+<div class="ov-titulo" id="ovTitulo"></div>
+<div class="ov-nota" id="ovNota"></div>
+<div class="ov-msg" id="ovMsg"></div>
+<div class="ov-codigo-label">Código de liberação do gabarito:</div>
+<div class="ov-codigo" id="ovCodigo"></div>
+<div class="ov-info">Anote o código e entregue ao adulto responsável</div>
+<button class="btn-fechar" onclick="fecharOverlay()">Fechar</button>
+</div>
+</div>
+
+<script>
+const BANCO = [
+  {texto:"Qual alternativa apresenta um exemplo de palavra polissêmica?",alts:["Manga (fruta) e manga (camisa)","Banco (assento) e banco (instituição)","Caiu do cavalo (tombou ou enganou-se)","Planta (vegetal) e planta (projeto)"],correta:2,exp:"\"Caiu do cavalo\" tem sentidos RELACIONADOS (queda literal e engano figurado), caracterizando polissemia. As demais são homônimas (sentidos sem relação).",err:["Manga (fruta/camisa) são homônimas — sentidos sem relação.","Banco (assento/instituição) são homônimas — sentidos sem relação.","","Planta (vegetal/projeto) são homônimas — sentidos sem relação."]},
+  {texto:"A palavra \"inacabado\" é formada por qual processo de derivação?",alts:["Sufixal","Prefixal e sufixal","Parassintética","Prefixal"],correta:1,exp:"\"Inacabado\": prefixo \"in-\" + radical \"acab\" + sufixo \"-ado\". Existe \"inacabar\"? Sim (com prefixo). Existe \"acabado\"? Sim (com sufixo). Portanto é prefixal E sufixal.",err:["Tem prefixo E sufixo, não só sufixo.","","Na parassintética, a palavra NÃO existe sem um dos afixos. Aqui existe \"acabado\" e \"inacabar\".","Tem sufixo \"-ado\" além do prefixo \"in-\"."]},
+  {texto:"Em \"Sobre a casa, já dei todas as informações acerca dela\", a ambiguidade fonética ocorre entre:",alts:["\"casa\" e \"caça\"","\"acerca dela\" pode soar como \"a cerca dela\"","\"dei\" e \"dê\"","\"informações\" é polissêmica"],correta:1,exp:"\"Acerca dela\" (a respeito dela) pode soar como \"a cerca dela\" (a cerca/muro dela). É uma confusão de segmentação sonora típica da ambiguidade fonética.",err:["\"Casa\" e \"caça\" têm pronúncias diferentes, não geram ambiguidade fonética nesta frase.","","\"Dei\" e \"dê\" são formas diferentes do verbo, não há ambiguidade fonética aqui.","\"Informações\" não é polissêmica neste contexto."]},
+  {texto:"O sufixo \"-mente\" é o único formador de qual classe gramatical?",alts:["Substantivos","Adjetivos","Verbos","Advérbios"],correta:3,exp:"O sufixo \"-mente\" é o único sufixo formador de advérbios em português. Ex.: francamente, provavelmente, certamente.",err:["Substantivos são formados por sufixos como -ção, -mento, -eiro, -ista.","Adjetivos são formados por sufixos como -oso, -ivo, -ável, -ico.","Verbos são formados por sufixos como -ear, -izar, -ificar.",""]},
+  {texto:"Na palavra \"submarino\", o prefixo \"sub-\" indica:",alts:["Excesso, posição superior","Repetição, retorno","Posição inferior, abaixo de","Negação, privação"],correta:2,exp:"\"Sub-\" significa posição inferior, abaixo de. Submarino = que está abaixo do mar. Outros exemplos: subsolo, subterrâneo.",err:["Excesso/posição superior é indicado por \"super-\" ou \"hiper-\".","Repetição/retorno é indicado pelo prefixo \"re-\".","","Negação/privação é indicada por \"in-\", \"des-\" ou \"a(n)-\"."]},
+  {texto:"\"Beijar → beijo\" é um exemplo de derivação:",alts:["Prefixal","Sufixal","Parassintética","Regressiva"],correta:3,exp:"Houve REDUÇÃO do verbo \"beijar\" para formar o substantivo \"beijo\". Isso é derivação regressiva — formação de substantivos a partir da redução de verbos.",err:["Não houve acréscimo de prefixo.","Não houve acréscimo de sufixo — houve redução.","Na parassintética, prefixo e sufixo são adicionados simultaneamente. Aqui houve redução.",""]},
+  {texto:"A derivação imprópria é quando:",alts:["Uma palavra ganha um prefixo novo","Uma palavra perde sílabas para formar outra","Uma palavra muda de classe gramatical sem alterar sua forma","Dois afixos são adicionados ao mesmo tempo"],correta:2,exp:"Na derivação imprópria, a forma da palavra NÃO muda — o que muda é a classe gramatical dependendo do contexto. Ex.: \"o andar\" (verbo virou substantivo).",err:["Ganhar prefixo é derivação prefixal.","Perder sílabas descreve derivação regressiva.","","Dois afixos simultâneos é derivação parassintética."]},
+  {texto:"Qual palavra abaixo contém o prefixo \"peri-\" (movimento em torno)?",alts:["Perímetro","Perigo","Periferia","Perímetro e periferia"],correta:3,exp:"Tanto \"perímetro\" (medida ao redor) quanto \"periferia\" (região em torno do centro) contêm o prefixo \"peri-\" com sentido de \"em torno de\".",err:["Perímetro tem o prefixo, mas periferia também — a resposta mais completa é D.","\"Perigo\" não contém o prefixo \"peri-\" — é uma palavra de origem diferente.","Periferia tem, mas perímetro também.",""]},
+  {texto:"Na frase \"Meu pai é um cara inigualável!\", o prefixo \"in-\" na palavra \"inigualável\" tem sentido de:",alts:["Movimento para dentro","Negação — que não pode ser igualado","Repetição","Posição inferior"],correta:1,exp:"\"Inigualável\" = que NÃO pode ser igualado. O prefixo \"in-\" aqui tem sentido de negação/privação.",err:["\"Movimento para dentro\" seria o caso em palavras como \"injetar\" ou \"ingerir\".","","\"Repetição\" é o sentido do prefixo \"re-\".","\"Posição inferior\" é o sentido de prefixos como \"sub-\" ou \"hipo-\"."]},
+  {texto:"Qual frase apresenta um caso de ambiguidade LEXICAL (e não fonética)?",alts:["\"Ela tinha motivos para não o receber\" (soa como \"É latinha?\")","\"Qualquer produto agradaria, desde que não fosse laranja\"","\"Ele se responsabilizou por tal feito\" (soa como \"portal feito\")","\"Na vez passada, eu fiz o jantar\" (soa confuso na fala rápida)"],correta:1,exp:"\"Laranja\" é ambígua no plano ESCRITO: pode ser a cor laranja ou a fruta laranja. É ambiguidade lexical (duplo significado da palavra). As demais são fonéticas (confusão de sons).",err:["Essa é ambiguidade FONÉTICA — o problema é no som.","","Essa é ambiguidade FONÉTICA — confusão sonora entre \"por tal\" e \"portal\".","Essa é ambiguidade FONÉTICA — confusão de segmentação sonora."]},
+  {texto:"Os sufixos \"-eiro\" e \"-ista\" são classificados como formadores de:",alts:["Verbos","Substantivos (nomes de agentes)","Adjetivos","Advérbios"],correta:1,exp:"Sufixos como \"-eiro\" (pedreiro, padeiro) e \"-ista\" (pianista, dentista) formam substantivos que indicam agentes — pessoas que praticam determinada atividade.",err:["Formadores de verbos são sufixos como -ear, -izar, -ificar.","","Formadores de adjetivos são sufixos como -oso, -ivo, -ável.","O único formador de advérbios é \"-mente\"."]},
+  {texto:"Na expressão \"Que chatice essa palestra!\", a derivação usada para formar \"chatice\" é:",alts:["Prefixal","Sufixal","Parassintética","Regressiva"],correta:1,exp:"\"Chatice\" = chato (radical) + -ice (sufixo). Apenas um sufixo foi adicionado à palavra primitiva. É derivação sufixal.",err:["Não há prefixo em \"chatice\" — \"chat-\" é o radical.","","Na parassintética, seria necessário prefixo E sufixo ao mesmo tempo.","Na regressiva haveria redução, mas aqui houve acréscimo (\"-ice\")."]},
+  {texto:"O que são palavras cognatas?",alts:["Palavras de idiomas diferentes com mesma origem","Palavras da mesma família que compartilham o mesmo radical","Palavras que soam igual mas têm significados diferentes","Palavras que mudaram de classe gramatical"],correta:1,exp:"Cognatas são palavras da mesma família que compartilham o mesmo radical. Ex.: terra, terreno, terráqueo, terreiro — todas cognatas (radical \"terr-\").",err:["Essa é outra definição de cognato (entre idiomas), mas no contexto de formação de palavras, cognatas são da mesma família/radical.","","Palavras que soam igual com significados diferentes são homônimas.","Palavras que mudam de classe são casos de derivação imprópria."]},
+  {texto:"Qual alternativa mostra uma palavra formada por derivação PREFIXAL?",alts:["Felizmente","Infeliz","Entristecer","Casamento"],correta:1,exp:"\"Infeliz\" = in- (prefixo) + feliz. Apenas o prefixo foi adicionado. É derivação prefixal.",err:["\"Felizmente\" = feliz + -mente (sufixo). É derivação sufixal.","","\"Entristecer\" = en- + triste + -cer. É derivação parassintética.","\"Casamento\" = casar + -mento (sufixo). É derivação sufixal."]},
+  {texto:"A ambiguidade é considerada um recurso estilístico POSITIVO em qual tipo de texto?",alts:["Artigos científicos e documentos oficiais","Textos literários, piadas e propagandas","Notícias de jornal","Manuais de instrução"],correta:1,exp:"Em textos literários, piadas e propagandas, a ambiguidade é usada de propósito como recurso criativo/estilístico. Em textos objetivos (ciência, notícia, manuais), deve ser evitada.",err:["Em artigos científicos, a ambiguidade é um VÍCIO — deve ser evitada para garantir clareza.","","Em notícias, a clareza é fundamental — ambiguidade seria um problema.","Manuais exigem linguagem direta e sem margem para dupla interpretação."]},
+  {texto:"Na palavra \"hipotensão\", o prefixo \"hipo-\" significa:",alts:["Excesso, posição superior","Movimento em torno","Posição inferior, abaixo do normal","Negação, privação"],correta:2,exp:"\"Hipo-\" significa posição inferior, abaixo do normal. Hipotensão = pressão abaixo do normal. Oposto de \"hiper-\" (excesso).",err:["Excesso/posição superior é \"hiper-\", não \"hipo-\".","Movimento em torno é \"peri-\" (perímetro, periferia).","","Negação/privação é \"in-\", \"des-\" ou \"a(n)-\"."]},
+  {texto:"\"As palavras 'entardecer', 'desprestígio' e 'oneroso' são formadas, respectivamente, por:\"",alts:["Prefixação, sufixação e parassíntese","Sufixação, parassíntese e prefixação","Parassíntese, prefixação e sufixação","Parassíntese, sufixação e prefixação"],correta:2,exp:"Entardecer = en+tarde+cer (parassintética — não existe \"entarde\" nem \"tardecer\"). Desprestígio = des+prestígio (prefixal). Oneroso = ônus+oso (sufixal).",err:["A ordem está incorreta. Entardecer é parassintética, não prefixal.","A ordem está incorreta.","","A ordem está incorreta. Desprestígio é prefixal, não sufixal."]},
+  {texto:"Qual das frases abaixo NÃO apresenta ambiguidade?",alts:["O professor falou com o aluno parado na porta.","A mãe viu o filho correndo.","O gato dormiu na almofada azul.","Encontrei o amigo andando na rua."],correta:2,exp:"\"O gato dormiu na almofada azul\" tem um único sentido claro. As demais são ambíguas: quem estava parado? Quem estava correndo? Quem estava andando?",err:["Ambígua: quem estava parado na porta — o professor ou o aluno?","Ambígua: quem estava correndo — a mãe ou o filho?","","Ambígua: quem estava andando — eu ou o amigo?"]},
+  {texto:"Na derivação prefixal e sufixal, qual é o TESTE para diferenciá-la da parassintética?",alts:["Verificar se a palavra tem mais de 3 sílabas","Verificar se a palavra existe com apenas o prefixo OU apenas o sufixo","Verificar se a palavra é um verbo ou substantivo","Contar o número de afixos na palavra"],correta:1,exp:"O teste: retire o prefixo — a palavra existe? Retire o sufixo — existe? Se SIM para algum → prefixal e sufixal. Se NÃO para ambos → parassintética.",err:["O número de sílabas não é critério para determinar o processo de derivação.","","A classe gramatical não é o critério — o teste é verificar se a palavra existe com apenas um dos afixos.","Ambos os processos têm dois afixos, então só contar não resolve — é preciso testar se a palavra existe sem um deles."]},
+  {texto:"O sufixo \"-ário\" em \"centenário\" e \"imaginário\" tem valor de:",alts:["Indicativo de lugar","Substantivo de agente","Adjetivo qualificativo","Indicativo de abundância"],correta:2,exp:"O sufixo \"-ário\" nessas palavras forma adjetivos qualificativos: centenário (relativo a cem anos), imaginário (relativo à imaginação). É um sufixo formador de adjetivos.",err:["Indicativo de lugar seria \"-ário\" em \"vestiário\" ou \"aquário\" — contexto diferente.","Substantivo de agente seria \"-ário\" em \"comissário\" — aqui funciona como adjetivo.","","Indicativo de abundância seria sufixos como \"-ame\" (vasilhame) ou \"-agem\" (plumagem)."]},
+];
+
+// Embaralhar
+function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+const QUESTOES = shuffle(BANCO);
+const TOTAL = 20;
+let respostas = new Array(TOTAL).fill(null);
+let codigoGerado = '';
+let enviado = false;
+
+function init(){
+  const c=document.getElementById('quizContainer');
+  const letras=['A','B','C','D'];
+  QUESTOES.forEach((q,i)=>{
+    let html=`<div class="questao" id="q${i}"><div class="q-header"><div class="q-num">${i+1}</div><div class="q-text">${q.texto}</div></div>`;
+    q.alts.forEach((a,j)=>{
+      html+=`<button class="alt" data-q="${i}" data-a="${j}" onclick="sel(${i},${j})"><span class="letra">${letras[j]}</span><span>${a}</span></button>`;
+    });
+    html+=`<div class="feedback" id="fb${i}"></div></div>`;
+    c.innerHTML+=html;
+  });
+}
+
+function sel(qi,ai){
+  if(enviado)return;
+  respostas[qi]=ai;
+  const q=document.getElementById('q'+qi);
+  q.classList.add('respondida');
+  q.querySelectorAll('.alt').forEach((a,j)=>a.classList.toggle('selected',j===ai));
+  updProg();
+}
+
+function updProg(){
+  const r=respostas.filter(x=>x!==null).length;
+  document.getElementById('progText').textContent=r+' de '+TOTAL+' respondidas';
+  document.getElementById('progFill').style.width=(r/TOTAL*100)+'%';
+  document.getElementById('progPct').textContent=(r/TOTAL*100).toFixed(0)+'%';
+  document.getElementById('btnEnviar').disabled=r<TOTAL;
+}
+
+function enviar(){
+  const f=[];respostas.forEach((r,i)=>{if(r===null)f.push(i);});
+  if(f.length>0){f.forEach(i=>{const q=document.getElementById('q'+i);q.classList.add('shake');setTimeout(()=>q.classList.remove('shake'),600);});document.getElementById('q'+f[0]).scrollIntoView({behavior:'smooth',block:'center'});return;}
+
+  enviado=true;
+  let ac=0;QUESTOES.forEach((q,i)=>{if(respostas[i]===q.correta)ac++;});
+
+  const letrasCode='ABCDEFGHJKLMNPQRSTUVWXYZ';
+  const l1=letrasCode[Math.floor(Math.random()*letrasCode.length)];
+  const l2=letrasCode[Math.floor(Math.random()*letrasCode.length)];
+  codigoGerado='SIM-'+ac+'-'+l1+l2;
+
+  let emoji,titulo,msg;
+  if(ac>=16){emoji='🏆🎉🌟';titulo='Excelente!';msg='Desempenho extraordinário!';}
+  else if(ac>=14){emoji='👏😄';titulo='Bom trabalho!';msg='Meta de 70% alcançada!';}
+  else if(ac>=8){emoji='📚👍';titulo='Quase lá!';msg='Revise os pontos fracos e tente de novo!';}
+  else{emoji='💪📖';titulo='Não desista!';msg='Volte ao resumo, estude e refaça o simulado!';}
+
+  document.getElementById('ovEmoji').textContent=emoji;
+  document.getElementById('ovTitulo').textContent=titulo;
+  document.getElementById('ovNota').textContent=ac+'/'+TOTAL;
+  document.getElementById('ovMsg').textContent=msg;
+  document.getElementById('ovCodigo').textContent=codigoGerado;
+  document.getElementById('overlay').classList.add('show');
+}
+
+function fecharOverlay(){
+  document.getElementById('overlay').classList.remove('show');
+  document.getElementById('progBar').style.display='none';
+  document.getElementById('btnBar').style.display='none';
+  document.body.style.paddingBottom='20px';
+
+  let ac=0;QUESTOES.forEach((q,i)=>{if(respostas[i]===q.correta)ac++;});
+  const rb=document.getElementById('resultBar');
+  document.getElementById('rbNota').textContent='📊 Nota: '+ac+'/'+TOTAL;
+  document.getElementById('rbCodigo').textContent='🔑 Código: '+codigoGerado;
+  rb.classList.add('show');
+
+  document.querySelectorAll('.alt').forEach(a=>a.disabled=true);
+
+  const travaHTML=`<div class="trava show" id="trava"><h3>🔒 Gabarito bloqueado</h3><p style="color:var(--texto2);font-size:13px;margin-bottom:14px;">Digite o código de liberação para ver as respostas:</p><input type="text" id="codigoInput" maxlength="12" placeholder="SIM-X-XX" onkeyup="if(event.key==='Enter')liberarGab()"><button class="btn-liberar" onclick="liberarGab()">Liberar Gabarito</button><div class="msg-erro" id="msgErro">❌ Código incorreto. Peça ao adulto.</div></div>`;
+  document.getElementById('quizContainer').insertAdjacentHTML('afterbegin',travaHTML);
+  document.getElementById('codigoInput').focus();
+}
+
+function liberarGab(){
+  const input=document.getElementById('codigoInput').value.trim().toUpperCase();
+  if(input===codigoGerado){document.getElementById('trava').style.display='none';mostrarGab();}
+  else{document.getElementById('msgErro').style.display='block';setTimeout(()=>document.getElementById('msgErro').style.display='none',3000);}
+}
+
+function mostrarGab(){
+  const letras=['A','B','C','D'];
+  QUESTOES.forEach((q,i)=>{
+    const qEl=document.getElementById('q'+i);
+    qEl.querySelectorAll('.alt').forEach((a,j)=>{
+      if(j===q.correta)a.classList.add('correta');
+      if(j===respostas[i]&&respostas[i]!==q.correta)a.classList.add('errada-escolhida');
+    });
+    const fb=document.getElementById('fb'+i);
+    const ok=respostas[i]===q.correta;
+    if(ok){fb.className='feedback show fb-ok';fb.innerHTML=`<div class="fb-title">✅ Você acertou!</div><p>${q.exp}</p>`;}
+    else{
+      let erHTML='';q.alts.forEach((a,j)=>{if(j!==q.correta&&q.err[j])erHTML+=`<p><strong>${letras[j]})</strong> ${q.err[j]}</p>`;});
+      fb.className='feedback show fb-err';fb.innerHTML=`<div class="fb-title">❌ Resposta incorreta</div><p><strong>Correta: ${letras[q.correta]})</strong> ${q.exp}</p><p style="margin-top:10px;color:var(--amarelo);font-weight:700;font-size:12px;">Por que as outras estão erradas:</p>${erHTML}`;
+    }
+  });
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+init();
+</script>
+</body>
+</html>

@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🗞️ Resumo Interativo — Português 9º Ano — AV3</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Kalam:wght@400;700&family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0f1729;
+  --card: #1a2540;
+  --card2: #1e2d4a;
+  --borda: #2a3f6e;
+  --texto: #e0e8f5;
+  --texto2: #8899bb;
+  --texto3: #556688;
+  --ciano: #00d4ff;
+  --magenta: #ff2d95;
+  --amarelo: #ffd23f;
+  --verde: #00e676;
+  --vermelho: #ff4757;
+  --roxo: #a855f7;
+  --laranja: #ff8c42;
+  --sombra: 0 2px 16px rgba(0,0,0,0.4);
+  --raio: 10px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);font-family:'Nunito Sans',sans-serif;color:var(--texto);min-height:100vh;
+  background-image:repeating-linear-gradient(135deg,transparent,transparent 40px,rgba(0,212,255,0.02) 40px,rgba(0,212,255,0.02) 41px);}
+
+/* HEADER */
+.header{background:linear-gradient(135deg,#0a0f1e 0%,#152040 60%,#1a2850 100%);padding:28px 20px 22px;text-align:center;position:relative;overflow:hidden;}
+.header::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 30% 50%,rgba(0,212,255,0.08) 0%,transparent 50%),radial-gradient(circle at 70% 50%,rgba(255,45,149,0.06) 0%,transparent 50%);}
+.header-inner{position:relative;z-index:1;}
+.header-badge{display:inline-block;background:rgba(255,45,149,0.15);border:1px solid rgba(255,45,149,0.3);color:var(--magenta);font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;padding:4px 18px;border-radius:20px;margin-bottom:12px;}
+.header h1{font-family:'Rajdhani',sans-serif;font-size:clamp(22px,5vw,32px);font-weight:700;color:#fff;line-height:1.2;}
+.header h1 span{color:var(--magenta);}
+.header p{font-family:'Kalam',cursive;color:rgba(255,255,255,0.5);font-size:14px;margin-top:6px;}
+
+/* TABS */
+.tabs{display:flex;background:rgba(15,23,41,0.95);backdrop-filter:blur(10px);position:sticky;top:0;z-index:100;border-bottom:1px solid var(--borda);overflow-x:auto;}
+.tab{flex:1;min-width:0;padding:12px 8px;border:none;background:transparent;color:var(--texto3);font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .3s;text-align:center;white-space:nowrap;border-bottom:3px solid transparent;}
+.tab:hover{color:var(--texto2);background:rgba(255,255,255,0.03);}
+.tab.active{color:var(--ciano);border-bottom-color:var(--ciano);background:rgba(0,212,255,0.05);}
+.tab-connector{position:absolute;bottom:0;height:3px;background:var(--ciano);transition:left .3s,width .3s;}
+
+/* SECTIONS */
+.section{display:none;padding:16px;max-width:780px;margin:0 auto;animation:fadeIn .4s;}
+.section.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+.sec-title{font-family:'Rajdhani',sans-serif;font-size:22px;font-weight:700;color:#fff;border-left:4px solid var(--ciano);padding-left:14px;margin-bottom:6px;}
+.sec-sub{font-family:'Kalam',cursive;font-size:14px;color:var(--texto3);padding-left:18px;margin-bottom:18px;}
+
+/* CARDS GRID */
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-bottom:20px;}
+.card{background:var(--card);border-radius:var(--raio);padding:16px;box-shadow:var(--sombra);border-top:3px solid var(--borda);position:relative;}
+.card.c-amarelo{border-top-color:var(--amarelo);}
+.card.c-verde{border-top-color:var(--verde);}
+.card.c-vermelho{border-top-color:var(--vermelho);}
+.card.c-ciano{border-top-color:var(--ciano);}
+.card.c-magenta{border-top-color:var(--magenta);}
+.card.c-roxo{border-top-color:var(--roxo);}
+.card.c-laranja{border-top-color:var(--laranja);}
+.card-tag{display:inline-block;font-family:'Rajdhani',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:2px 10px;border-radius:10px;margin-bottom:8px;}
+.card-tag.t-conceito{background:rgba(0,212,255,0.15);color:var(--ciano);}
+.card-tag.t-exemplo{background:rgba(0,230,118,0.15);color:var(--verde);}
+.card-tag.t-regra{background:rgba(255,45,149,0.15);color:var(--magenta);}
+.card-tag.t-tipo{background:rgba(168,85,247,0.15);color:var(--roxo);}
+.card-tag.t-dica{background:rgba(255,210,63,0.15);color:var(--amarelo);}
+.card h3{font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;color:#fff;margin-bottom:6px;}
+.card p{font-size:14px;line-height:1.6;color:var(--texto);}
+.card p strong{color:var(--ciano);}
+.card-pin{position:absolute;top:10px;right:10px;width:14px;height:14px;border-radius:50%;background:var(--vermelho);box-shadow:0 2px 6px rgba(255,71,87,0.4);}
+
+/* WIDE CARD */
+.wide-card{background:var(--card);border-radius:var(--raio);padding:16px;margin-bottom:16px;border-left:4px solid var(--roxo);box-shadow:var(--sombra);}
+.wide-card h3{font-family:'Rajdhani',sans-serif;font-size:17px;font-weight:700;color:#fff;margin-bottom:10px;}
+.wide-card table{width:100%;border-collapse:collapse;font-size:13px;}
+.wide-card th{background:rgba(168,85,247,0.2);color:var(--roxo);padding:8px 10px;text-align:left;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;}
+.wide-card td{padding:8px 10px;border-top:1px solid rgba(255,255,255,0.05);color:var(--texto);line-height:1.4;}
+.wide-card tr:hover td{background:rgba(255,255,255,0.02);}
+
+/* FLIP CARDS */
+.flip-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:20px;}
+.flip-card{perspective:800px;height:140px;cursor:pointer;}
+.flip-inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d;}
+.flip-card.flipped .flip-inner{transform:rotateY(180deg);}
+.flip-front,.flip-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:var(--raio);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px;text-align:center;}
+.flip-front{background:var(--card2);border:1px solid var(--borda);}
+.flip-front .emoji{font-size:28px;margin-bottom:6px;}
+.flip-front .nome{font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:700;color:#fff;}
+.flip-back{background:linear-gradient(135deg,rgba(0,212,255,0.15),rgba(255,45,149,0.1));border:1px solid rgba(0,212,255,0.3);transform:rotateY(180deg);}
+.flip-back p{font-size:13px;line-height:1.5;color:var(--texto);}
+.flip-hint{text-align:center;font-family:'Kalam',cursive;font-size:12px;color:var(--texto3);margin-bottom:10px;}
+
+/* POST-IT */
+.postit{background:linear-gradient(135deg,#c9a227,#b8941f);border-radius:4px;padding:14px 16px;margin-bottom:14px;transform:rotate(-0.5deg);box-shadow:3px 4px 12px rgba(0,0,0,0.4);position:relative;color:#1a1400;}
+.postit::before{content:'📌';position:absolute;top:-6px;right:12px;font-size:16px;}
+.postit-label{font-family:'Kalam',cursive;font-size:13px;font-weight:700;margin-bottom:4px;}
+.postit p{font-family:'Kalam',cursive;font-size:13px;line-height:1.5;}
+.postit strong{color:#3a2800;}
+.postit2{transform:rotate(0.7deg);}
+.postit3{transform:rotate(-0.3deg);}
+
+/* PEGADINHAS */
+.pegadinhas{background:rgba(255,71,87,0.08);border:1px solid rgba(255,71,87,0.25);border-left:5px solid var(--vermelho);border-radius:var(--raio);padding:16px;margin-bottom:18px;}
+.pegadinhas h3{font-family:'Rajdhani',sans-serif;font-size:17px;font-weight:700;color:var(--vermelho);margin-bottom:10px;}
+.pegadinhas li{list-style:none;position:relative;padding-left:22px;margin-bottom:8px;font-size:14px;line-height:1.5;}
+.pegadinhas li::before{content:'⚠';position:absolute;left:0;font-size:12px;}
+.pegadinhas li strong{color:var(--vermelho);}
+
+/* GLOSSÁRIO */
+.glossario-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;margin-bottom:20px;}
+.glossario-item{background:rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:12px;}
+.glossario-item .termo{font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:700;color:var(--ciano);margin-bottom:4px;}
+.glossario-item .def{font-size:13px;line-height:1.5;color:var(--texto2);}
+
+@media(max-width:500px){
+  .cards-grid,.flip-grid{grid-template-columns:1fr;}
+  .glossario-grid{grid-template-columns:1fr;}
+  .tab{font-size:11px;padding:10px 6px;}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="header-badge">Resumo Interativo</div>
+    <h1>Língua Portuguesa — <span>AV3</span></h1>
+    <p>9º ano • Avaliação Mensal 3</p>
+  </div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="showTab(0)">📝 Ambiguidade Lexical</button>
+  <button class="tab" onclick="showTab(1)">🔊 Ambig. Fonética</button>
+  <button class="tab" onclick="showTab(2)">🔧 Derivação</button>
+  <button class="tab" onclick="showTab(3)">🧩 Afixos</button>
+  <button class="tab" onclick="showTab(4)">📖 Glossário</button>
+</div>
+
+<!-- ══════ ABA 1: AMBIGUIDADE LEXICAL ══════ -->
+<div class="section active" id="tab0">
+  <div class="sec-title">Ambiguidade Lexical</div>
+  <div class="sec-sub">quando as palavras pregam peças no sentido...</div>
+
+  <div class="cards-grid">
+    <div class="card c-ciano">
+      <div class="card-pin"></div>
+      <span class="card-tag t-conceito">💡 Conceito</span>
+      <h3>O que é ambiguidade?</h3>
+      <p><strong>Ambiguidade</strong> é a possibilidade de um texto ou enunciado ter mais de um significado. Pode ser um recurso estilístico (em piadas, literatura, propaganda) ou um vício de linguagem (quando prejudica a clareza).</p>
+    </div>
+    <div class="card c-amarelo">
+      <div class="card-pin"></div>
+      <span class="card-tag t-conceito">💡 Conceito</span>
+      <h3>Ambiguidade lexical</h3>
+      <p>Ocorre quando a <strong>seleção vocabular</strong> (escolha de palavras) gera duplo sentido. Causada por dois tipos de palavras: <strong>homônimas</strong> e <strong>polissêmicas</strong>.</p>
+    </div>
+    <div class="card c-verde">
+      <div class="card-pin"></div>
+      <span class="card-tag t-tipo">🏷️ Tipo</span>
+      <h3>Palavras homônimas</h3>
+      <p>Mesma <strong>grafia e pronúncia</strong>, mas significados <strong>completamente diferentes</strong> (sem relação entre si). Ex.: "banco" (assento) × "banco" (instituição financeira); "manga" (fruta) × "manga" (da camisa).</p>
+    </div>
+    <div class="card c-magenta">
+      <div class="card-pin"></div>
+      <span class="card-tag t-tipo">🏷️ Tipo</span>
+      <h3>Palavras polissêmicas</h3>
+      <p>Palavras que podem ser interpretadas em sentido <strong>literal ou figurado</strong>, apresentando mais de um sentido <strong>relacionado</strong>. Ex.: "Paulo caiu do cavalo" → levou um tombo (literal) ou se enganou (figurado).</p>
+    </div>
+  </div>
+
+  <div class="postit">
+    <div class="postit-label">⚡ Dica de prova</div>
+    <p><strong>Homônimas</strong> = sentidos SEM relação. <strong>Polissêmicas</strong> = sentidos COM relação (literal/figurado). Na prova, pergunte-se: "os dois sentidos têm alguma conexão?" Se não → homônima. Se sim → polissêmica.</p>
+  </div>
+
+  <div class="flip-hint">👆 Clique nos cards para virar e ver os exemplos</div>
+  <div class="flip-grid">
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front"><div class="emoji">🥭</div><div class="nome">Manga</div></div>
+        <div class="flip-back"><p><strong>Homônima:</strong> "Paulo cortou a manga" → fruta manga OU manga da camisa? Sentidos sem relação.</p></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front"><div class="emoji">🏦</div><div class="nome">Banco</div></div>
+        <div class="flip-back"><p><strong>Homônima:</strong> "A empresa reformou o banco" → banco de praça OU agência bancária? Sentidos sem relação.</p></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front"><div class="emoji">🐴</div><div class="nome">Caiu do cavalo</div></div>
+        <div class="flip-back"><p><strong>Polissêmica:</strong> "Paulo caiu do cavalo" → levou um tombo (literal) OU se enganou (figurado)? Sentidos relacionados.</p></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front"><div class="emoji">🌿</div><div class="nome">Quebrou um galho</div></div>
+        <div class="flip-back"><p><strong>Polissêmica:</strong> "Marta quebrou um galho para a vizinha" → cortou um galho (literal) OU ajudou (figurado)? Sentidos relacionados.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pegadinhas">
+    <h3>⚠ Alertas de Pegadinha</h3>
+    <ul>
+      <li><strong>Nem toda ambiguidade é ruim:</strong> em textos literários, piadas e propagandas, ela é usada de propósito como recurso estilístico.</li>
+      <li><strong>A ambiguidade deve ser evitada</strong> em textos objetivos: notícias, artigos científicos, documentos oficiais.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══════ ABA 2: AMBIGUIDADE FONÉTICA ══════ -->
+<div class="section" id="tab1">
+  <div class="sec-title">Ambiguidade Fonética</div>
+  <div class="sec-sub">quando o som engana o ouvido...</div>
+
+  <div class="cards-grid">
+    <div class="card c-laranja">
+      <div class="card-pin"></div>
+      <span class="card-tag t-conceito">💡 Conceito</span>
+      <h3>O que é?</h3>
+      <p>A <strong>ambiguidade fonética</strong> ocorre quando uma sequência de palavras pode remeter à <strong>pronúncia de outras</strong>, gerando um efeito ou significado diferente do pretendido. Acontece no plano <strong>oral/sonoro</strong>, não no escrito.</p>
+    </div>
+    <div class="card c-ciano">
+      <div class="card-pin"></div>
+      <span class="card-tag t-regra">📏 Regra</span>
+      <h3>Quando evitar?</h3>
+      <p>Apesar de ser interessante em textos <strong>humorísticos</strong>, constitui um problema em textos que precisam de <strong>linguagem objetiva</strong>. Se a conversa for com uma autoridade ou requer tratamento formal, evite construções que gerem duplo som.</p>
+    </div>
+  </div>
+
+  <div class="flip-hint">👆 Clique nos cards para ver a ambiguidade fonética</div>
+  <div class="flip-grid">
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front"><div class="emoji">🥫</div><div class="nome">"Ela tinha..."</div></div>
+        <div class="flip-back"><p>"Ela tinha motivos para não o receber" → ao falar, pode soar como <strong>"É latinha?"</strong></p></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front"><div class="emoji">💼</div><div class="nome">"Amá-la..."</div></div>
+        <div class="flip-back"><p>"O pai procurou amá-la acima de tudo" → ao falar, pode soar como <strong>"A mala?"</strong></p></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front"><div class="emoji">🚪</div><div class="nome">"Por tal feito"</div></div>
+        <div class="flip-back"><p>"Ele se responsabilizou por tal feito" → pode soar como <strong>"portal feito"</strong></p></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front"><div class="emoji">📅</div><div class="nome">"Na vez passada"</div></div>
+        <div class="flip-back"><p>"Na vez passada, eu fiz o jantar" → pode soar como <strong>"Navez passada"</strong> ou causar confusão na separação das palavras.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="postit postit2">
+    <div class="postit-label">⚡ Dica de prova</div>
+    <p><strong>Lexical × Fonética:</strong> Lexical = problema na PALAVRA escrita (duplo significado). Fonética = problema no SOM ao falar (sequência de palavras soa como outra coisa). Na prova, se o exemplo envolver "ao pronunciar" → é fonética!</p>
+  </div>
+
+  <div class="postit postit3">
+    <div class="postit-label">⚡ Dica de prova</div>
+    <p>O humor da tirinha do pai ("Fé demais, estudo de menos") pode gerar ambiguidade fonética. Preste atenção quando a prova trouxer <strong>tirinhas e quadrinhos</strong> — o humor quase sempre envolve algum tipo de ambiguidade!</p>
+  </div>
+</div>
+
+<!-- ══════ ABA 3: DERIVAÇÃO ══════ -->
+<div class="section" id="tab2">
+  <div class="sec-title">Derivação</div>
+  <div class="sec-sub">como nascem as palavras novas...</div>
+
+  <div class="cards-grid">
+    <div class="card c-verde">
+      <div class="card-pin"></div>
+      <span class="card-tag t-conceito">💡 Conceito</span>
+      <h3>Primitivas × Derivadas</h3>
+      <p><strong>Primitivas:</strong> palavras que dão origem a outras. <strong>Derivadas:</strong> "nascem" de uma primitiva, a partir de seu <strong>radical</strong>. Derivadas da mesma família são <strong>cognatas</strong> (compartilham o radical).</p>
+    </div>
+    <div class="card c-ciano">
+      <div class="card-pin"></div>
+      <span class="card-tag t-exemplo">🔍 Exemplo</span>
+      <h3>Família de "terra"</h3>
+      <p>Terra (primitiva) → terreno, terráqueo, terreiro, terremoto (todas derivadas, cognatas entre si — radical "terr-").</p>
+    </div>
+  </div>
+
+  <div class="wide-card">
+    <h3>📋 Os 6 Processos de Derivação</h3>
+    <div style="overflow-x:auto;">
+    <table>
+      <tr><th>Processo</th><th>O que acontece</th><th>Exemplo</th><th>Teste</th></tr>
+      <tr><td><strong>Prefixal</strong></td><td>Acrescenta prefixo</td><td>feliz → <strong>in</strong>feliz</td><td>—</td></tr>
+      <tr><td><strong>Sufixal</strong></td><td>Acrescenta sufixo</td><td>feliz → feliz<strong>mente</strong></td><td>—</td></tr>
+      <tr><td><strong>Prefixal e Sufixal</strong></td><td>Prefixo + sufixo (não simultâneos)</td><td>feliz → <strong>in</strong>feliz<strong>mente</strong></td><td>Existe "infeliz"? ✅ Existe "felizmente"? ✅</td></tr>
+      <tr><td><strong>Parassintética</strong></td><td>Prefixo + sufixo (simultâneos)</td><td>triste → <strong>en</strong>triste<strong>cer</strong></td><td>Existe "entriste"? ❌ Existe "tristecer"? ❌</td></tr>
+      <tr><td><strong>Regressiva</strong></td><td>Redução da primitiva</td><td>beijar → beij<strong>o</strong></td><td>Substantivo vindo de verbo</td></tr>
+      <tr><td><strong>Imprópria</strong></td><td>Muda classe gramatical (sem mudar a forma)</td><td>"menino <strong>prodígio</strong>" (adj) → "o <strong>prodígio</strong>" (subst)</td><td>Mesma forma, classe diferente</td></tr>
+    </table>
+    </div>
+  </div>
+
+  <div class="postit">
+    <div class="postit-label">⚡ Dica de prova — A PEGADINHA MAIS COBRADA!</div>
+    <p><strong>Prefixal e Sufixal × Parassintética:</strong> faça o TESTE! Tire o prefixo — a palavra existe? Tire o sufixo — existe? Se SIM para algum → prefixal e sufixal. Se NÃO para ambos → parassintética. Ex.: "infelizmente" = prefixal e sufixal (infeliz ✅); "entristecer" = parassintética (entriste ❌).</p>
+  </div>
+
+  <div class="postit postit2">
+    <div class="postit-label">⚡ Dica de prova</div>
+    <p><strong>Derivação imprópria NÃO muda a forma!</strong> A palavra fica IGUAL — o que muda é a classe gramatical no contexto da frase. Ex.: "o andar daquela mãe" → "andar" (verbo virou substantivo).</p>
+  </div>
+
+  <div class="pegadinhas">
+    <h3>⚠ Alertas de Pegadinha</h3>
+    <ul>
+      <li><strong>Regressiva ≠ qualquer redução:</strong> é especificamente substantivos formados a partir de verbos (combater → combate, atacar → ataque).</li>
+      <li><strong>"Entardecer" é parassintética:</strong> não existe "entarde" nem "tardecer" — prefixo e sufixo foram adicionados ao mesmo tempo.</li>
+      <li><strong>"Desprestígio" é prefixação:</strong> existe "prestígio" (sem o "des-"), então basta ter tirado o prefixo.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══════ ABA 4: AFIXOS ══════ -->
+<div class="section" id="tab3">
+  <div class="sec-title">Afixos — Prefixos e Sufixos</div>
+  <div class="sec-sub">as peças que montam e desmontam palavras...</div>
+
+  <div class="cards-grid">
+    <div class="card c-magenta">
+      <div class="card-pin"></div>
+      <span class="card-tag t-conceito">💡 Conceito</span>
+      <h3>O que são afixos?</h3>
+      <p>Morfemas usados para formar novas palavras a partir de um <strong>radical</strong>. Dois tipos: <strong>prefixos</strong> (antes do radical) e <strong>sufixos</strong> (depois do radical). Cada afixo carrega seu próprio significado.</p>
+    </div>
+    <div class="card c-ciano">
+      <div class="card-pin"></div>
+      <span class="card-tag t-regra">📏 Diferença-chave</span>
+      <h3>Prefixo × Sufixo</h3>
+      <p><strong>Prefixo:</strong> muda o SENTIDO, mas raramente muda a classe gramatical (feliz → infeliz, ambos adjetivos). <strong>Sufixo:</strong> normalmente MUDA a classe gramatical (feliz [adj] → felizmente [adv]).</p>
+    </div>
+  </div>
+
+  <div class="wide-card" style="border-left-color:var(--ciano);">
+    <h3>🔑 Prefixos mais cobrados na prova</h3>
+    <div style="overflow-x:auto;">
+    <table>
+      <tr><th>Prefixo</th><th>Significado</th><th>Exemplos</th></tr>
+      <tr><td><strong>in-/im-/i-</strong></td><td>Negação OU Movimento para dentro</td><td>infeliz, impossível (negação) / ingerir, incluir (para dentro)</td></tr>
+      <tr><td><strong>re-</strong></td><td>De novo, repetição</td><td>rever, refazer, relembrar</td></tr>
+      <tr><td><strong>des-/dis-</strong></td><td>Negação, privação</td><td>desigual, desmontar</td></tr>
+      <tr><td><strong>pre-/ante-</strong></td><td>Antes, anterioridade</td><td>prever, antever</td></tr>
+      <tr><td><strong>sub-/vice-</strong></td><td>Posição inferior</td><td>submarino, vice-prefeito</td></tr>
+      <tr><td><strong>super-/hiper-</strong></td><td>Excesso, posição superior</td><td>supermercado, hipertensão</td></tr>
+      <tr><td><strong>anti-/contra-</strong></td><td>Oposição, ação contrária</td><td>antibiótico, contraditório</td></tr>
+      <tr><td><strong>a(n)-</strong></td><td>Negação, privação</td><td>anarquia, ateu</td></tr>
+      <tr><td><strong>bi-/di-</strong></td><td>Duplicidade, duas vezes</td><td>bicampeonato, dígrafo</td></tr>
+      <tr><td><strong>peri-</strong></td><td>Movimento em torno</td><td>perímetro, periférico</td></tr>
+    </table>
+    </div>
+  </div>
+
+  <div class="postit">
+    <div class="postit-label">⚡ Dica de prova — CUIDADO COM O "IN-"!</div>
+    <p>O prefixo "in-" tem <strong>DOIS sentidos</strong>: 1) Negação → infeliz, inacabado, incansável. 2) Movimento para dentro → injetor, ingerir, incluir. A prova adora pedir que você identifique qual sentido está sendo usado!</p>
+  </div>
+
+  <div class="wide-card" style="border-left-color:var(--amarelo);">
+    <h3>🔑 Sufixos mais cobrados</h3>
+    <div style="overflow-x:auto;">
+    <table>
+      <tr><th>Tipo</th><th>Sufixos</th><th>Exemplos</th></tr>
+      <tr><td><strong>Formadores de verbos</strong></td><td>-ear, -ejar, -izar, -ificar, -entar</td><td>guerrear, alvejar, amortizar, codificar, adoentar</td></tr>
+      <tr><td><strong>Formadores de substantivos</strong></td><td>-ção, -mento, -eiro, -ista, -ismo, -ário</td><td>alimentação, casamento, pedreiro, pianista, budismo</td></tr>
+      <tr><td><strong>Formadores de adjetivos</strong></td><td>-oso, -ivo, -ável, -ico, -al</td><td>gostoso, afetivo, louvável, acústico, gestual</td></tr>
+      <tr><td><strong>Formador de advérbios</strong></td><td>-mente</td><td>francamente, provavelmente, certamente</td></tr>
+    </table>
+    </div>
+  </div>
+
+  <div class="postit postit3">
+    <div class="postit-label">⚡ Dica de prova</div>
+    <p><strong>Nem todo "-inho" é diminutivo!</strong> Em "galinha" e "rainha", o sufixo já está incorporado à palavra — não indica tamanho pequeno. O mesmo vale para "farinha". Já em "casinha", indica diminutivo ou afeto.</p>
+  </div>
+
+  <div class="postit postit2">
+    <div class="postit-label">⚡ Dica de prova</div>
+    <p><strong>"-dor" × "-ista":</strong> "Consumidor" (sufixo -dor) = quem consome (neutro). "Consumista" (sufixo -ista) = quem consome demais (carga negativa). O sufixo escolhido MUDA a intenção!</p>
+  </div>
+
+  <div class="pegadinhas">
+    <h3>⚠ Alertas de Pegadinha</h3>
+    <ul>
+      <li><strong>O radical "formar" com prefixos:</strong> Reformar (de novo), Transformar (através), Deformar (desfazer), Informar (para dentro) — mesmo radical, sentidos totalmente diferentes.</li>
+      <li><strong>"Estrategicamente" é derivação sufixal:</strong> estratégica + -mente. NÃO é parassintética.</li>
+      <li><strong>"Embarcar" é parassintética:</strong> não existe "embarc" nem "barcar". Prefixo "em-" + radical "barc" + sufixo "-ar" ao mesmo tempo.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══════ ABA 5: GLOSSÁRIO ══════ -->
+<div class="section" id="tab4">
+  <div class="sec-title">Glossário</div>
+  <div class="sec-sub">todos os termos importantes num só lugar...</div>
+
+  <div class="glossario-grid">
+    <div class="glossario-item"><div class="termo">Ambiguidade</div><div class="def">Possibilidade de um texto ou enunciado ter mais de um significado.</div></div>
+    <div class="glossario-item"><div class="termo">Ambiguidade lexical</div><div class="def">Duplo sentido causado pela escolha de palavras (homônimas ou polissêmicas).</div></div>
+    <div class="glossario-item"><div class="termo">Ambiguidade fonética</div><div class="def">Duplo sentido causado pela pronúncia — sequência de palavras soa como outra coisa.</div></div>
+    <div class="glossario-item"><div class="termo">Palavras homônimas</div><div class="def">Mesma grafia e pronúncia, significados sem relação entre si.</div></div>
+    <div class="glossario-item"><div class="termo">Palavras polissêmicas</div><div class="def">Palavras com vários sentidos relacionados (literal/figurado).</div></div>
+    <div class="glossario-item"><div class="termo">Radical</div><div class="def">Parte da palavra que carrega o significado básico, compartilhado pelas cognatas.</div></div>
+    <div class="glossario-item"><div class="termo">Palavras primitivas</div><div class="def">Palavras que dão origem a outras (ex.: "terra").</div></div>
+    <div class="glossario-item"><div class="termo">Palavras derivadas</div><div class="def">Palavras formadas a partir de uma primitiva (ex.: "terreno").</div></div>
+    <div class="glossario-item"><div class="termo">Cognatas</div><div class="def">Palavras da mesma família que compartilham o mesmo radical.</div></div>
+    <div class="glossario-item"><div class="termo">Afixo</div><div class="def">Morfema acrescentado ao radical para formar novas palavras. Pode ser prefixo ou sufixo.</div></div>
+    <div class="glossario-item"><div class="termo">Prefixo</div><div class="def">Afixo colocado ANTES do radical. Muda o sentido, raramente muda a classe gramatical.</div></div>
+    <div class="glossario-item"><div class="termo">Sufixo</div><div class="def">Afixo colocado DEPOIS do radical. Normalmente muda a classe gramatical da palavra.</div></div>
+    <div class="glossario-item"><div class="termo">Derivação prefixal</div><div class="def">Acrescenta apenas um prefixo à primitiva (feliz → infeliz).</div></div>
+    <div class="glossario-item"><div class="termo">Derivação sufixal</div><div class="def">Acrescenta apenas um sufixo à primitiva (feliz → felizmente).</div></div>
+    <div class="glossario-item"><div class="termo">Derivação prefixal e sufixal</div><div class="def">Prefixo + sufixo adicionados separadamente — a palavra existe com apenas um deles.</div></div>
+    <div class="glossario-item"><div class="termo">Derivação parassintética</div><div class="def">Prefixo + sufixo adicionados ao mesmo tempo — a palavra NÃO existe com apenas um.</div></div>
+    <div class="glossario-item"><div class="termo">Derivação regressiva</div><div class="def">Redução da palavra, formando substantivos a partir de verbos (beijar → beijo).</div></div>
+    <div class="glossario-item"><div class="termo">Derivação imprópria</div><div class="def">A palavra não muda de forma, mas passa a funcionar como outra classe gramatical.</div></div>
+  </div>
+</div>
+
+<script>
+function showTab(idx) {
+  document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', i===idx));
+  document.querySelectorAll('.section').forEach((s,i) => s.classList.toggle('active', i===idx));
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+</script>
+</body>
+</html>

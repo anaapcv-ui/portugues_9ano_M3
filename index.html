@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kit de Estudos — Português 9º Ano — AV3</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#f5f0e8;font-family:'Nunito',sans-serif;color:#2c2418;min-height:100vh;padding:24px 16px 40px;}
+.pagina{max-width:680px;margin:0 auto;background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,0.1);}
+
+.topo{background:linear-gradient(135deg,#1a2540 0%,#0f1729 100%);padding:28px 28px 22px;text-align:center;position:relative;}
+.topo::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#00d4ff,#ff2d95,#00d4ff);}
+.topo-badge{display:inline-block;background:rgba(0,212,255,0.15);color:#00d4ff;font-size:10px;font-weight:800;letter-spacing:3px;text-transform:uppercase;padding:4px 16px;border-radius:20px;margin-bottom:10px;}
+.topo h1{color:#fff;font-size:clamp(22px,5vw,30px);font-weight:900;line-height:1.2;margin-bottom:6px;}
+.topo p{color:rgba(255,255,255,0.6);font-size:13px;}
+
+.intro{background:#fdf8f0;padding:18px 28px;text-align:center;border-bottom:1px dashed #e0d4bc;font-size:14px;color:#5a4e3c;line-height:1.6;}
+.intro strong{color:#1a2540;}
+
+.conteudo{padding:20px 24px 28px;}
+
+.secao{margin-bottom:24px;}
+.secao-titulo{font-size:16px;font-weight:900;color:#1a2540;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid #e8dfc8;display:flex;align-items:center;gap:8px;}
+.secao-num{min-width:26px;height:26px;border-radius:50%;background:#1a2540;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;}
+
+/* MATERIAIS */
+.mat{display:grid;grid-template-columns:50px 1fr;gap:0;margin-bottom:12px;background:#fff;border-radius:14px;overflow:hidden;border:1.5px solid #e8dfc8;transition:box-shadow .2s;}
+.mat:hover{box-shadow:0 4px 16px rgba(0,0,0,0.08);}
+.mat-esquerda{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:12px 0;}
+.mat-emoji{font-size:22px;}
+.mat-direita{padding:12px 14px;border-left:1px solid #f0e8d8;}
+.mat-nome{font-size:15px;font-weight:800;color:#1a2540;margin-bottom:4px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.mat-quando{font-size:12px;color:#8a7e6e;font-weight:600;margin-bottom:6px;}
+.mat-como{font-size:13px;color:#5a4e3c;line-height:1.6;}
+.mat-link{display:inline-block;margin-top:8px;padding:6px 16px;background:linear-gradient(135deg,#00d4ff,#ff2d95);color:#fff;border-radius:20px;font-size:12px;font-weight:800;text-decoration:none;letter-spacing:0.5px;transition:transform .2s;}
+.mat-link:hover{transform:translateY(-1px);}
+
+.tag{display:inline-block;font-size:9px;font-weight:800;letter-spacing:0.5px;padding:2px 8px;border-radius:10px;text-transform:uppercase;}
+.tag-cel{background:#e3f2fd;color:#1565c0;}
+.tag-pc{background:#e8f5e9;color:#2e7d32;}
+.tag-imp{background:#fff3e0;color:#e65100;}
+
+/* CÓDIGO */
+.codigo-box{background:#fdf8f0;border:2px solid #ffd23f;border-radius:14px;padding:16px;margin-bottom:20px;}
+.codigo-box h3{font-size:15px;font-weight:900;color:#e65100;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.codigo-box p{font-size:13px;line-height:1.7;color:#5a4e3c;}
+.codigo-box strong{color:#1a2540;}
+.codigo-exemplo{display:inline-block;background:#1a2540;color:#ffd23f;font-family:monospace;font-size:15px;font-weight:700;padding:4px 12px;border-radius:6px;letter-spacing:2px;margin:4px 2px;}
+
+/* DICAS */
+.dica{background:#f0fdf4;border:1.5px solid #a7f3d0;border-radius:12px;padding:14px;margin-bottom:10px;font-size:13px;line-height:1.6;color:#065f46;display:flex;gap:10px;align-items:flex-start;}
+.dica-icon{font-size:18px;flex-shrink:0;margin-top:1px;}
+
+.conteudos{background:#f8f4ff;border:1.5px solid #d8b4fe;border-radius:12px;padding:14px;margin-bottom:20px;}
+.conteudos h3{font-size:14px;font-weight:900;color:#7c3aed;margin-bottom:8px;}
+.conteudos ul{list-style:none;padding:0;}
+.conteudos li{font-size:13px;padding:4px 0;padding-left:18px;position:relative;color:#5a4e3c;}
+.conteudos li::before{content:'📌';position:absolute;left:0;font-size:11px;}
+
+.rodape{background:#fdf8f0;padding:16px 28px;text-align:center;border-top:1px solid #e8dfc8;font-family:'Caveat',cursive;font-size:15px;color:#8a7e6e;}
+
+@media(max-width:480px){
+  body{padding:12px 10px 30px;}
+  .conteudo{padding:16px 18px 24px;}
+  .mat{grid-template-columns:44px 1fr;}
+}
+</style>
+</head>
+<body>
+<div class="pagina">
+
+<div class="topo">
+  <div class="topo-badge">Kit de Estudos</div>
+  <h1>📚 Português — AV3</h1>
+  <p>9º ano • Avaliação Mensal 3</p>
+</div>
+
+<div class="intro">
+  Este kit tem <strong>4 materiais interativos</strong> para ajudar nos estudos para a prova mensal.<br>
+  Abaixo você encontra o que cada um faz, como usar e os links de acesso.
+</div>
+
+<div class="conteudo">
+
+<!-- CONTEÚDOS -->
+<div class="conteudos">
+  <h3>📋 Conteúdos da prova</h3>
+  <ul>
+    <li>Ambiguidade lexical (palavras homônimas e polissêmicas)</li>
+    <li>Derivação na formação de palavras (6 processos)</li>
+    <li>Ambiguidade fonética</li>
+    <li>Afixos (prefixos gregos/latinos e sufixos)</li>
+  </ul>
+</div>
+
+<!-- OS MATERIAIS -->
+<div class="secao">
+  <div class="secao-titulo"><div class="secao-num">1</div> Os materiais</div>
+
+  <!-- RESUMO -->
+  <div class="mat">
+    <div class="mat-esquerda"><div class="mat-emoji">🗞️</div></div>
+    <div class="mat-direita">
+      <div class="mat-nome">Resumo Interativo <span class="tag tag-cel">Celular</span> <span class="tag tag-pc">PC</span></div>
+      <div class="mat-quando">Para revisar o conteúdo a qualquer momento</div>
+      <div class="mat-como">Cards de conteúdo organizados por tema, flip cards para testar a memória, dicas de prova em destaque e glossário com todos os termos. <strong>Ótimo para revisão rápida antes da prova.</strong></div>
+      <a href="resumo_port_9ano_av3.html" class="mat-link">▶ Abrir Resumo</a>
+    </div>
+  </div>
+
+  <!-- LEITURA GUIADA -->
+  <div class="mat">
+    <div class="mat-esquerda"><div class="mat-emoji">📖</div></div>
+    <div class="mat-direita">
+      <div class="mat-nome">Leitura Guiada <span class="tag tag-cel">Interativo</span></div>
+      <div class="mat-quando">Para trabalhar o conteúdo com profundidade</div>
+      <div class="mat-como">8 blocos progressivos com texto explicativo e perguntas abertas. Leia, responda com suas palavras, depois confira a resposta modelo. <strong>É o estudo mais completo do kit.</strong></div>
+      <a href="leitura_guiada_port_9ano_av3.html" class="mat-link">▶ Abrir Leitura Guiada</a>
+    </div>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="mat">
+    <div class="mat-esquerda"><div class="mat-emoji">📝</div></div>
+    <div class="mat-direita">
+      <div class="mat-nome">Quiz <span class="tag tag-imp">10 questões</span></div>
+      <div class="mat-quando">Para testar o que aprendeu</div>
+      <div class="mat-como">10 questões de múltipla escolha (A a D). Responda todas e envie para ver sua nota. O gabarito detalhado fica <strong>bloqueado por um código</strong> que só o adulto responsável pode liberar.</div>
+      <a href="quiz_port_9ano_av3.html" class="mat-link">▶ Abrir Quiz</a>
+    </div>
+  </div>
+
+  <!-- SIMULADO -->
+  <div class="mat">
+    <div class="mat-esquerda"><div class="mat-emoji">📋</div></div>
+    <div class="mat-direita">
+      <div class="mat-nome">Simulado <span class="tag tag-imp">20 questões</span></div>
+      <div class="mat-quando">Para simular a prova real</div>
+      <div class="mat-como">20 questões originais embaralhadas, cobrindo todos os conteúdos. Meta de acerto: <strong>70% (14 acertos)</strong>. Também tem código de liberação para o gabarito.</div>
+      <a href="simulado_port_9ano_av3.html" class="mat-link">▶ Abrir Simulado</a>
+    </div>
+  </div>
+</div>
+
+<!-- SISTEMA DE CÓDIGO -->
+<div class="secao">
+  <div class="secao-titulo"><div class="secao-num">2</div> O sistema de código</div>
+
+  <div class="codigo-box">
+    <h3>🔐 Como funciona?</h3>
+    <p>Quando o aluno termina o <strong>Quiz</strong> ou <strong>Simulado</strong>, ele recebe uma nota e um <strong>código de liberação</strong>. Esse código serve para desbloquear o gabarito com as explicações detalhadas.</p>
+    <p style="margin-top:8px;">Os códigos têm este formato:</p>
+    <p style="margin-top:6px;">
+      Quiz: <span class="codigo-exemplo">QUI-8-FK</span> (8 = acertos)<br>
+      Simulado: <span class="codigo-exemplo">SIM-15-AB</span> (15 = acertos)
+    </p>
+    <p style="margin-top:10px;"><strong>Por que o código existe?</strong> Para que o aluno tente responder sozinho antes de ver as respostas. O ideal é que o adulto só libere o gabarito <strong>depois</strong> que o aluno terminar e ver sua nota.</p>
+  </div>
+</div>
+
+<!-- DICAS PARA OS PAIS -->
+<div class="secao">
+  <div class="secao-titulo"><div class="secao-num">3</div> Dicas para mãe/pai</div>
+
+  <div class="dica">
+    <span class="dica-icon">📱</span>
+    <span>Todos os materiais funcionam no <strong>celular</strong> e no <strong>computador</strong>. Basta abrir o link — não precisa instalar nada.</span>
+  </div>
+  <div class="dica">
+    <span class="dica-icon">📖</span>
+    <span>A <strong>ordem sugerida</strong> é: Resumo (para revisar) → Leitura Guiada (para aprofundar) → Quiz (para testar) → Simulado (para simular a prova). Mas cada material funciona sozinho!</span>
+  </div>
+  <div class="dica">
+    <span class="dica-icon">🔑</span>
+    <span>Quando seu filho terminar o Quiz ou Simulado, ele vai mostrar o <strong>código</strong>. Anote o código e <strong>digite no campo de liberação</strong> para abrir o gabarito. Assim ele pode estudar os erros.</span>
+  </div>
+  <div class="dica">
+    <span class="dica-icon">🎯</span>
+    <span>No Simulado, a <strong>meta é 70%</strong> (14 acertos em 20). Se não atingir, revise o Resumo e tente novamente — as questões são embaralhadas toda vez!</span>
+  </div>
+  <div class="dica">
+    <span class="dica-icon">✏️</span>
+    <span>Na Leitura Guiada, o aluno responde com suas próprias palavras antes de ver a resposta modelo. <strong>Incentive a escrever sem consultar</strong> — o esforço de pensar sozinho é o que faz fixar!</span>
+  </div>
+  <div class="dica">
+    <span class="dica-icon">⚠️</span>
+    <span>O conteúdo da prova inclui: ambiguidade lexical e fonética, os 6 processos de derivação e os afixos (prefixos e sufixos). <strong>A pegadinha mais cobrada</strong> é a diferença entre derivação prefixal e sufixal × parassintética!</span>
+  </div>
+</div>
+
+</div>
+
+<div class="rodape">
+  Bons estudos! 💙 Cada material funciona de forma independente — use quando precisar.
+</div>
+
+</div>
+</body>
+</html>

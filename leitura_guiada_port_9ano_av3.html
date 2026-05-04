@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📖 Leitura Guiada — Português 9º Ano — AV3</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Kalam:wght@400;700&family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0f1729;
+  --card: #1a2540;
+  --card2: #1e2d4a;
+  --borda: #2a3f6e;
+  --texto: #e0e8f5;
+  --texto2: #8899bb;
+  --texto3: #556688;
+  --ciano: #00d4ff;
+  --magenta: #ff2d95;
+  --amarelo: #ffd23f;
+  --verde: #00e676;
+  --verde-bg: rgba(0,230,118,0.12);
+  --vermelho: #ff4757;
+  --vermelho-bg: rgba(255,71,87,0.12);
+  --roxo: #a855f7;
+  --laranja: #ff8c42;
+  --sombra: 0 2px 16px rgba(0,0,0,0.4);
+  --raio: 10px;
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+body {
+  background: var(--bg);
+  font-family: 'Nunito Sans', sans-serif;
+  color: var(--texto);
+  min-height: 100vh;
+  background-image:
+    repeating-linear-gradient(135deg, transparent, transparent 40px, rgba(0,212,255,0.02) 40px, rgba(0,212,255,0.02) 41px);
+}
+
+/* ── HEADER ── */
+.header {
+  background: linear-gradient(135deg, #0a0f1e 0%, #152040 60%, #1a2850 100%);
+  padding: 28px 20px 22px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.header::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%; width: 200%; height: 200%;
+  background: radial-gradient(circle at 30% 50%, rgba(0,212,255,0.08) 0%, transparent 50%),
+              radial-gradient(circle at 70% 50%, rgba(255,45,149,0.06) 0%, transparent 50%);
+  animation: headerGlow 8s ease-in-out infinite alternate;
+}
+@keyframes headerGlow {
+  0% { opacity: 0.6; }
+  100% { opacity: 1; }
+}
+.header-inner { position: relative; z-index: 1; }
+.header-badge {
+  display: inline-block;
+  background: rgba(0,212,255,0.15);
+  border: 1px solid rgba(0,212,255,0.3);
+  color: var(--ciano);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 4px 18px;
+  border-radius: 20px;
+  margin-bottom: 12px;
+}
+.header h1 {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: clamp(22px, 5vw, 32px);
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #fff;
+  line-height: 1.2;
+}
+.header h1 span { color: var(--ciano); }
+.header p {
+  font-family: 'Kalam', cursive;
+  color: rgba(255,255,255,0.5);
+  font-size: 14px;
+  margin-top: 6px;
+}
+
+/* ── PROGRESS BAR ── */
+.progress-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(15,23,41,0.95);
+  backdrop-filter: blur(10px);
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--borda);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.dots {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.dot {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: var(--card2);
+  border: 2px solid var(--borda);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--texto3);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.dot.active {
+  border-color: var(--ciano);
+  color: var(--ciano);
+  box-shadow: 0 0 8px rgba(0,212,255,0.3);
+}
+.dot.done {
+  background: var(--verde);
+  border-color: var(--verde);
+  color: #fff;
+}
+.bar-wrap {
+  flex: 1;
+  height: 6px;
+  background: var(--card2);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--ciano), var(--magenta));
+  border-radius: 3px;
+  transition: width 0.6s ease;
+  width: 0;
+}
+.bar-label {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--texto2);
+  white-space: nowrap;
+}
+
+/* ── BLOCOS ── */
+.container { max-width: 750px; margin: 0 auto; padding: 16px; }
+
+.bloco {
+  margin-bottom: 16px;
+  border-radius: var(--raio);
+  overflow: hidden;
+  box-shadow: var(--sombra);
+  border-left: 4px solid var(--borda);
+  background: var(--card);
+  opacity: 0.4;
+  pointer-events: none;
+  transition: opacity 0.5s, border-color 0.3s;
+}
+.bloco.liberado {
+  opacity: 1;
+  pointer-events: auto;
+}
+.bloco.done {
+  opacity: 0.85;
+}
+
+.bloco-header {
+  padding: 14px 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  user-select: none;
+  transition: background 0.3s;
+}
+.bloco-header:hover { background: rgba(255,255,255,0.03); }
+
+.bloco-num {
+  min-width: 32px; height: 32px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+}
+.bloco-titulo {
+  flex: 1;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: #fff;
+}
+.bloco-check {
+  display: none;
+  width: 22px; height: 22px;
+  background: var(--verde);
+  border-radius: 50%;
+  color: #fff;
+  font-size: 12px;
+  align-items: center; justify-content: center;
+}
+.bloco.done .bloco-check { display: flex; }
+
+.bloco-arrow {
+  color: var(--texto3);
+  transition: transform 0.3s;
+  font-size: 18px;
+}
+.bloco.open .bloco-arrow { transform: rotate(180deg); }
+
+.bloco-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease;
+}
+.bloco.open .bloco-body { max-height: 15000px; }
+
+.bloco-inner { padding: 0 16px 16px; }
+
+/* Cores dos blocos */
+.bloco[data-cor="ciano"] { border-left-color: var(--ciano); }
+.bloco[data-cor="ciano"] .bloco-num { background: var(--ciano); }
+.bloco[data-cor="magenta"] { border-left-color: var(--magenta); }
+.bloco[data-cor="magenta"] .bloco-num { background: var(--magenta); }
+.bloco[data-cor="amarelo"] { border-left-color: var(--amarelo); }
+.bloco[data-cor="amarelo"] .bloco-num { background: var(--amarelo); color: #1a1a2e; }
+.bloco[data-cor="verde"] { border-left-color: var(--verde); }
+.bloco[data-cor="verde"] .bloco-num { background: var(--verde); }
+.bloco[data-cor="roxo"] { border-left-color: var(--roxo); }
+.bloco[data-cor="roxo"] .bloco-num { background: var(--roxo); }
+.bloco[data-cor="laranja"] { border-left-color: var(--laranja); }
+.bloco[data-cor="laranja"] .bloco-num { background: var(--laranja); color: #1a1a2e; }
+.bloco[data-cor="azul"] { border-left-color: #3b82f6; }
+.bloco[data-cor="azul"] .bloco-num { background: #3b82f6; }
+.bloco[data-cor="rosa"] { border-left-color: #f472b6; }
+.bloco[data-cor="rosa"] .bloco-num { background: #f472b6; }
+
+/* ── TEXTO EXPLICATIVO ── */
+.texto-box {
+  background: rgba(255,255,255,0.04);
+  border-radius: 8px;
+  padding: 14px;
+  margin-bottom: 14px;
+  line-height: 1.75;
+  font-size: 15px;
+  color: var(--texto);
+}
+.texto-box strong { color: var(--ciano); font-weight: 700; }
+.texto-box em { color: var(--amarelo); font-style: normal; font-weight: 600; }
+
+/* ── PERGUNTAS ── */
+.resp-label {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--magenta);
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pergunta {
+  background: rgba(255,255,255,0.03);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 12px;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.pergunta p {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--texto);
+  line-height: 1.5;
+}
+.pergunta textarea {
+  width: 100%;
+  min-height: 70px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid var(--borda);
+  border-radius: 6px;
+  color: var(--texto);
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 14px;
+  padding: 10px;
+  resize: vertical;
+  transition: border-color 0.3s;
+}
+.pergunta textarea:focus {
+  outline: none;
+  border-color: var(--ciano);
+}
+.pergunta textarea:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ── RESPOSTA MODELO ── */
+.resp-modelo {
+  display: none;
+  background: rgba(0,212,255,0.06);
+  border: 1px solid rgba(0,212,255,0.2);
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 8px;
+  animation: fadeIn 0.4s;
+}
+.resp-modelo.show { display: block; }
+.resp-modelo-label {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ciano);
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+.resp-modelo p {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--texto);
+}
+
+/* ── AUTOAVALIAÇÃO ── */
+.autoaval {
+  display: none;
+  margin-top: 8px;
+  gap: 8px;
+}
+.autoaval.show { display: flex; }
+.btn-aval {
+  flex: 1;
+  padding: 8px;
+  border: 2px solid var(--borda);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--texto);
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.btn-aval:hover { background: rgba(255,255,255,0.05); }
+.btn-aval.selected-ok {
+  background: var(--verde-bg);
+  border-color: var(--verde);
+  color: var(--verde);
+}
+.btn-aval.selected-rev {
+  background: rgba(255,210,63,0.12);
+  border-color: var(--amarelo);
+  color: var(--amarelo);
+}
+
+/* ── BOTÃO CONFERIR ── */
+.btn-conferir {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  margin-top: 8px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--ciano), var(--magenta));
+  color: #fff;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: opacity 0.3s, transform 0.2s;
+}
+.btn-conferir:hover { transform: translateY(-1px); }
+.btn-conferir:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ── TELA FINAL ── */
+.tela-final {
+  display: none;
+  max-width: 750px;
+  margin: 0 auto;
+  padding: 16px;
+}
+.tela-final.show { display: block; animation: fadeIn 0.6s; }
+
+.pegadinhas-card {
+  background: var(--card);
+  border-radius: var(--raio);
+  padding: 18px;
+  margin-bottom: 16px;
+  border-left: 4px solid var(--vermelho);
+  box-shadow: var(--sombra);
+}
+.pegadinhas-card h3 {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--vermelho);
+  margin-bottom: 12px;
+}
+.pegadinhas-card li {
+  margin-bottom: 8px;
+  font-size: 14px;
+  line-height: 1.5;
+  list-style: none;
+  padding-left: 20px;
+  position: relative;
+}
+.pegadinhas-card li::before {
+  content: '⚠';
+  position: absolute;
+  left: 0;
+  font-size: 12px;
+}
+
+.stats-card {
+  background: linear-gradient(135deg, rgba(0,212,255,0.1), rgba(255,45,149,0.1));
+  border: 1px solid var(--borda);
+  border-radius: var(--raio);
+  padding: 20px;
+  text-align: center;
+  box-shadow: var(--sombra);
+}
+.stats-card h3 {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 14px;
+}
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.stat-item {
+  background: rgba(0,0,0,0.3);
+  border-radius: 8px;
+  padding: 14px 8px;
+}
+.stat-num {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+}
+.stat-num.green { color: var(--verde); }
+.stat-num.yellow { color: var(--amarelo); }
+.stat-num.ciano { color: var(--ciano); }
+.stat-label {
+  font-size: 11px;
+  color: var(--texto2);
+  margin-top: 4px;
+}
+
+@keyframes fadeIn {
+  from { opacity:0; transform:translateY(10px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+@media (max-width: 500px) {
+  .dots { gap: 4px; }
+  .dot { width: 20px; height: 20px; font-size: 10px; }
+  .stats-grid { grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+  .stat-num { font-size: 22px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-inner">
+    <div class="header-badge">Leitura Guiada</div>
+    <h1>Língua Portuguesa — <span>AV3</span></h1>
+    <p>9º ano • Avaliação Mensal 3</p>
+  </div>
+</div>
+
+<!-- BARRA DE PROGRESSO -->
+<div class="progress-bar">
+  <div class="dots" id="dots"></div>
+  <div class="bar-wrap"><div class="bar-fill" id="barFill"></div></div>
+  <div class="bar-label" id="barLabel">0/8</div>
+</div>
+
+<!-- BLOCOS -->
+<div class="container" id="blocosContainer">
+
+<!-- BLOCO 1 — Ambiguidade Lexical: O que é -->
+<div class="bloco liberado open" data-cor="ciano" data-bloco="0">
+  <div class="bloco-header" onclick="toggleBloco(0)">
+    <div class="bloco-num">1</div>
+    <div class="bloco-titulo">O que é ambiguidade?</div>
+    <span class="bloco-check">✓</span>
+    <span class="bloco-arrow">▼</span>
+  </div>
+  <div class="bloco-body">
+    <div class="bloco-inner">
+      <div class="texto-box">
+        Chamamos de <strong>ambiguidade</strong> a possibilidade de textos e enunciados terem mais de um significado. Às vezes, a ambiguidade é usada de propósito — como recurso estilístico — em textos literários, piadas e propagandas. Porém, em outros contextos, ela se torna um <strong>vício de linguagem</strong>, comprometendo a clareza da comunicação. Um dos fatores que causam ambiguidade é a seleção vocabular (<strong>ambiguidade lexical</strong>), quando palavras podem ter mais de um sentido.
+      </div>
+      <div class="resp-label">✏️ Responda</div>
+      <div class="pergunta" data-p="0-0">
+        <p>1. Em suas palavras, o que é ambiguidade e quando ela pode ser um problema na comunicação?</p>
+        <textarea placeholder="Escreva sua resposta aqui..." oninput="checkFields(0)"></textarea>
+        <div class="resp-modelo"><div class="resp-modelo-label">📋 RESPOSTA MODELO</div><p>Ambiguidade é quando um texto ou frase permite mais de uma interpretação. Ela pode ser um recurso criativo em textos literários, humor e propaganda, mas se torna um problema quando aparece em textos que exigem clareza, como notícias, documentos oficiais e artigos científicos, pois o leitor pode entender algo diferente do que o autor pretendia.</p></div>
+        <div class="autoaval"><button class="btn-aval" onclick="avaliar(0,0,'ok',this)">✅ Acertei</button><button class="btn-aval" onclick="avaliar(0,0,'rev',this)">📝 Preciso revisar</button></div>
+      </div>
+      <div class="pergunta" data-p="0-1">
+        <p>2. Dê um exemplo seu de frase ambígua e explique os dois sentidos possíveis.</p>
+        <textarea placeholder="Escreva sua resposta aqui..." oninput="checkFields(0)"></textarea>
+        <div class="resp-modelo"><div class="resp-modelo-label">📋 RESPOSTA MODELO</div><p>Exemplo: "O engenheiro não consegue encontrar a planta." — A palavra "planta" pode ser a planta de um projeto (desenho técnico) ou uma planta vegetal. A frase tem dois sentidos porque "planta" é uma palavra homônima (mesma grafia e pronúncia, significados diferentes).</p></div>
+        <div class="autoaval"><button class="btn-aval" onclick="avaliar(0,1,'ok',this)">✅ Acertei</button><button class="btn-aval" onclick="avaliar(0,1,'rev',this)">📝 Preciso revisar</button></div>
+      </div>
+      <button class="btn-conferir" disabled onclick="conferir(0)">Conferir Minhas Respostas</button>
+    </div>
+  </div>
+</div>
+
+<!-- BLOCO 2 — Palavras homônimas e polissêmicas -->
+<div class="bloco" data-cor="magenta" data-bloco="1">
+  <div class="bloco-header" onclick="toggleBloco(1)">
+    <div class="bloco-num">2</div>
+    <div class="bloco-titulo">Homônimas e polissêmicas</div>
+    <span class="bloco-check">✓</span>
+    <span class="bloco-arrow">▼</span>
+  </div>
+  <div class="bloco-body">
+    <div class="bloco-inner">
+      <div class="texto-box">
+        A <strong>ambiguidade lexical</strong> pode ser causada por dois tipos de palavras. As <strong>palavras homônimas</strong> têm a mesma grafia e pronúncia, mas significados totalmente diferentes. Exemplo: <em>"Paulo cortou a manga"</em> — manga da fruta ou manga da camisa? Já as <strong>palavras polissêmicas</strong> são aquelas que têm vários sentidos relacionados entre si, podendo ser interpretadas em sentido literal ou figurado. Exemplo: <em>"Paulo caiu do cavalo"</em> — levou um tombo ou se enganou?
+      </div>
+      <div class="resp-label">✏️ Responda</div>
+      <div class="pergunta" data-p="1-0">
+        <p>1. Qual é a diferença entre palavras homônimas e palavras polissêmicas?</p>
+        <textarea placeholder="Escreva sua resposta aqui..." oninput="checkFields(1)"></textarea>
+        <div class="resp-modelo"><div class="resp-modelo-label">📋 RESPOSTA MODELO</div><p>Palavras homônimas têm a mesma grafia e pronúncia, mas significados completamente diferentes (sem relação entre si), como "banco" (assento) e "banco" (instituição financeira). Já as polissêmicas possuem vários sentidos que têm alguma relação ou conexão entre si, podendo ser usadas em sentido literal ou figurado, como "caiu do cavalo" (tombo real ou engano).</p></div>
+        <div class="autoaval"><button class="btn-aval" onclick="avaliar(1,0,'ok',this)">✅ Acertei</button><button class="btn-aval" onclick="avaliar(1,0,'rev',this)">📝 Preciso revisar</button></div>
+      </div>
+      <div class="pergunta" data-p="1-1">
+        <p>2. Na frase "A empresa de Marta reformou o banco", quais são os dois sentidos possíveis de "banco"? Essa palavra é homônima ou polissêmica?</p>
+        <textarea placeholder="Escreva sua resposta aqui..." oninput="checkFields(1)"></textarea>
+        <div class="resp-modelo"><div class="resp-modelo-label">📋 RESPOSTA MODELO</div><p>"Banco" pode significar o banco de uma praça (um assento) ou uma agência bancária (instituição financeira). A palavra é homônima, pois os dois significados não têm relação entre si — são origens diferentes que resultaram na mesma forma.</p></div>
+        <div class="autoaval"><button class="btn-aval" onclick="avaliar(1,1,'ok',this)">✅ Acertei</button><button class="btn-aval" onclick="avaliar(1,1,'rev',this)">📝 Preciso revisar</button></div>
+      </div>
+      <button class="btn-conferir" disabled onclick="conferir(1)">Conferir Minhas Respostas</button>
+    </div>
+  </div>
+</div>
+
+<!-- BLOCO 3 — Ambiguidade Fonética -->
+<div class="bloco" data-cor="amarelo" data-bloco="2">
+  <div class="bloco-header" onclick="toggleBloco(2)">
+    <div class="bloco-num">3</div>
+    <div class="bloco-titulo">Ambiguidade fonética</div>
+    <span class="bloco-check">✓</span>
+    <span class="bloco-arrow">▼</span>
+  </div>
+  <div class="bloco-body">
+    <div class="bloco-inner">
+      <div class="texto-box">
+        A ambiguidade nem sempre está nas palavras escritas. A <strong>ambiguidade fonética</strong> ocorre quando uma sequência de palavras pode nos remeter à pronúncia de outras, gerando um efeito ou significado que não era o pretendido pelo enunciador. Exemplo: <em>"Ela tinha motivos para não o receber"</em> — ao falar, pode soar como "É latinha?" Outro exemplo: <em>"O pai procurou amá-la acima de tudo"</em> — ao falar, pode soar como "A mala?" Esse tipo de ambiguidade é muito explorado em textos humorísticos, mas deve ser evitado em textos que precisam de linguagem objetiva.
+      </div>
+      <div class="resp-label">✏️ Responda</div>
+      <div class="pergunta" data-p="2-0">
+        <p>1. O que diferencia a ambiguidade fonética da ambiguidade lexical?</p>
+        <textarea placeholder="Escreva sua resposta aqui..." oninput="checkFields(2)"></textarea>
+        <div class="resp-modelo"><div class="resp-modelo-label">📋 RESPOSTA MODELO</div><p>A ambiguidade lexical ocorre no plano escrito, quando uma palavra tem mais de um significado (homônima ou polissêmica). Já a ambiguidade fonética ocorre no plano oral/sonoro, quando a pronúncia de uma sequência de palavras pode ser confundida com outra sequência diferente, gerando outro sentido.</p></div>
+        <div class="autoaval"><button class="btn-aval" onclick="avaliar(2,0,'ok',this)">✅ Acertei</button><button class="btn-aval" onclick="avaliar(2,0,'rev',this)">📝 Preciso revisar</button></div>
+      </div>
+      <div class="pergunta" data-p="2-1">
+        <p>2. Na frase "Ele se responsabilizou por tal feito", identifique a ambiguidade fonética e explique os dois sentidos possíveis.</p>
+        <textarea placeholder="Escreva sua resposta aqui..." oninput="checkFields(2)"></textarea>
+        <div class="resp-modelo"><div class="resp-modelo-label">📋 RESPOSTA MODELO</div><p>A sequência "por tal feito" pode soar como "portal feito". No sentido original, "por tal feito" significa "por essa ação/realização". Já na leitura fonética alternativa, "portal feito" sugeriria algo como um portal que foi construído. A ambiguidade está no som das palavras quando pronunciadas em sequência.</p></div>
+        <div class="autoaval"><button class="btn-aval" onclick="avaliar(2,1,'ok',this)">✅ Acertei</button><button class="btn-aval" onclick="avaliar(2,1,'rev',this)">📝 Preciso revisar</button></div>
+      </div>
+      <div class="pergunta" data-p="2-2">
+        <p>3. Em que ditado popular é possível identificar uma ambiguidade fonética: "Filho de peixe, peixinho é"? Explique.</p>
+        <textarea placeholder="Escreva sua resposta aqui..." oninput="checkFields(2)"></textarea>
+        <div class="resp-modelo"><div class="resp-modelo-label">📋 RESPOSTA MODELO</div><p>Na pronúncia rápida de "peixe, peixinho é", pode-se ouvir "peixe peixinho é" como se fosse uma frase contínua que soa de forma ambígua. A ambiguidade fonética aparece quando "peixinho é" pode soar como "peixinhué" ou outra construção sonora, dependendo da velocidade e entonação da fala.</p></div>
+        <div class="autoaval"><button class="btn-aval" onclick="avaliar(2,2,'ok',this)">✅ Acertei</button><button class="btn-aval" onclick="avaliar(2,2,'rev',this)">📝 Preciso revisar</button></div>
+      </div>
+      <button class="btn-conferir" disabled onclick="conferir(2)">Conferir Minhas Respostas</button>
+    </div>
+  </div>
+</div>
+
+<!-- BLOCO 4 — Derivação: conceito e processos -->
+<div class="bloco" data-cor="verde" data-bloco="3">
+  <div class="bloco-header" onclick="toggleBloco(3)">
+    <div class="bloco-num">4</div>
+    <div class="bloco-titulo">Derivação: palavras primitivas e derivadas</div>
+    <span class="bloco-check">✓</span>
+    <span class="bloco-arrow">▼</span>
+  </div>
+  <div class="bloco-body">
+    <div class="bloco-inner">
+      <div class="texto-box">
+        Em Língua Portuguesa, temos a possibilidade de adaptar, modificar e criar palavras para atender às nossas necessidades de comunicação. Chamamos de <strong>primitivas</strong> as palavras usadas para originar outras, e de <strong>derivadas</strong> aquelas que "nascem" de uma palavra que já existia, a partir de seu <strong>radical</strong>. As palavras derivadas são <strong>cognatas</strong> — fazem parte da mesma família e compartilham o mesmo radical. Existem <strong>seis processos de derivação</strong>: prefixal, sufixal, prefixal e sufixal, parassintética, regressiva e imprópria.
+      </div>
+      <div class="resp-label">✏️ Responda</div>
+      <div class="pergunta" data-p="3-0">
+        <p>1. Explique a diferença entre palavras primitivas e derivadas e dê um exemplo de cada.</p>
+        <textarea placeholder="Escreva sua resposta aqui..." oninput="checkFields(3)"></textarea>
+        <div class="resp-modelo"><div class="resp-modelo-label">📋 RESPOSTA MODELO</div><p>Palavras primitivas são aquelas que dão origem a outras palavras, como "feliz". Palavras derivadas são formadas a partir de uma primitiva, usando seu radical, como "infeliz" (acréscimo do prefixo "in-") ou "felizmente" (acréscimo do sufixo "-mente"). As derivadas compartilham o radical da palavra original.</p></div>
+        <div class="autoaval"><button class="btn-aval" onclick="avaliar(3,0,'ok',this)">✅ Acertei</button><button class="btn-aval" onclick="avaliar(3,0,'rev',this)">📝 Preciso revisar</button></div>
+      </div>
+      <div class="pergunta" data-p="3-1">
+        <p>2. O que são palavras cognatas? Dê um exemplo de família de palavras.</p>
+        <textarea placeholder="Escreva sua resposta aqui..." oninput="checkFields(3)"></textarea>
+        <div class="resp-modelo"><div class="resp-modelo-label">📋 RESPOSTA MODELO</div><p>Cognatas são palavras que fazem parte da mesma família, pois compartilham o mesmo radical. Exemplo: da palavra "terra" (radical "terr-"), derivam "terreno", "terráqueo", "terreiro", "terremoto" — todas cognatas entre si.</p></div>
+        <div class="autoaval"><button class="btn-aval" onclick="avaliar(3,1,'ok',this)">✅ Acertei</button><button class="btn-aval" onclick="avaliar(3,1,'rev',this)">📝 Preciso revisar</button></div>
+      </div>
+      <button class="btn-conferir" disabled onclick="conferir(3)">Conferir Minhas Respostas</button>
+    </div>
+  </div>
+</div>
+
+<!-- BLOCO 5 — Os 6 processos de derivação -->
+<div class="bloco" data-cor="roxo" data-bloco="4">
+  <div class="bloco-header" onclick="toggleBloco(4)">
+    <div class="bloco-num">5</div>
+    <div class="bloco-titulo">Os 6 processos de derivação</div>
+    <span class="bloco-check">✓</span>
+    <span class="bloco-arrow">▼</span>
+  </div>
+  <div class="bloco-body">
+    <div class="bloco-inner">
+      <div class="texto-box">
+        São seis os processos: <strong>1) Prefixal</strong> — acrescenta-se um prefixo (feliz → <em>in</em>feliz). <strong>2) Sufixal</strong> — acrescenta-se um sufixo (feliz → feliz<em>mente</em>). <strong>3) Prefixal e sufixal</strong> — acrescenta-se prefixo e sufixo de forma não simultânea, podendo existir a palavra só com um dos afixos (feliz → <em>in</em>feliz<em>mente</em>). <strong>4) Parassintética</strong> — prefixo e sufixo são acrescentados simultaneamente, e a palavra não existe com apenas um deles (triste → <em>en</em>triste<em>cer</em>). <strong>5) Regressiva</strong> — há redução da palavra primitiva (beijar → beijo). <strong>6) Imprópria</strong> — a palavra muda de classe gramatical sem alterar sua forma (o adjetivo "prodigio" vira substantivo).
+      </div>
+      <div class="resp-label">✏️ Responda</div>
+      <div class="pergunta" data-p="4-0">
+        <p>1. Qual é a diferença entre derivação prefixal e sufixal e derivação parassintética? Use exemplos.</p>
+        <textarea placeholder="Escreva sua resposta aqui..." oninput="checkFields(4)"></textarea>
+        <div class="resp-modelo"><div class="resp-modelo-label">📋 RESPOSTA MODELO</div><p>Na derivação prefixal e sufixal, os afixos são adicionados de forma não simultânea — é possível usar a palavra só com o prefixo ou só com o sufixo. Ex.: "infelizmente" → existe "infeliz" (só prefixo) e "felizmente" (só sufixo). Na parassintética, prefixo e sufixo são adicionados ao mesmo tempo — a palavra não existe com apenas um deles. Ex.: "entristecer" → não existe "entriste" nem "tristecer".</p></div>
+        <div class="autoaval"><button class="btn-aval" onclick="avaliar(4,0,'ok',this)">✅ Acertei</button><button class="btn-aval" onclick="avaliar(4,0,'rev',this)">📝 Preciso revisar</button></div>
+      </div>
+      <div class="pergunta" data-p="4-1">
+        <p>2. Explique o que é derivação regressiva e derivação imprópria, com exemplos de cada.</p>
+        <textarea placeholder="Escreva sua resposta aqui..." oninput="checkFields(4)"></textarea>
+        <div class="resp-modelo"><div class="resp-modelo-label">📋 RESPOSTA MODELO</div><p>Derivação regressiva: há uma redução da palavra, geralmente formando substantivos a partir de verbos. Ex.: "beijar" → "beijo", "atacar" → "ataque". Derivação imprópria: a forma da palavra não muda, mas ela passa a funcionar como outra classe gramatical. Ex.: "Armandinho é um menino prodígio" (adjetivo) vs. "Armandinho, o prodígio da turma" (substantivo) — mesma palavra, classe diferente.</p></div>
+        <div class="autoaval"><button class="btn-aval" onclick="avaliar(4,1,'ok',this)">✅ Acertei</button><button class="btn-aval" onclick="avaliar(4,1,'rev',this)">📝 Preciso revisar</button></div>
+      </div>
+      <button class="btn-conferir" disabled onclick="conferir(4)">Conferir Minhas Respostas</button>
+    </div>
+  </div>
+</div>
+
+<!-- BLOCO 6 — Afixos: Prefixos -->
+<div class="bloco" data-cor="laranja" data-bloco="5">
+  <div class="bloco-header" onclick="toggleBloco(5)">
+    <div class="bloco-num">6</div>
+    <div class="bloco-titulo">Afixos — Prefixos (gregos e latinos)</div>
+    <span class="bloco-check">✓</span>
+    <span class="bloco-arrow">▼</span>
+  </div>
+  <div class="bloco-body">
+    <div class="bloco-inner">
+      <div class="texto-box">
+        No processo de derivação, usamos <strong>afixos</strong> para formar novas palavras a partir de um radical. Há dois tipos: <strong>prefixos</strong> (colocados antes do radical) e <strong>sufixos</strong> (colocados depois). Os prefixos da língua portuguesa têm origem no <strong>grego</strong> e no <strong>latim</strong>. Um prefixo raramente altera a classe gramatical da palavra — a mudança se dá no significado. Exemplos: <em>ver</em> → <em>re</em>ver, <em>pre</em>ver, <em>ante</em>ver. Cada prefixo carrega seu próprio sentido: "re-" = de novo, "pre-" = antes, "in-" = negação ou movimento para dentro.
+      </div>
+      <div class="resp-label">✏️ Responda</div>
+      <div class="pergunta" data-p="5-0">
+        <p>1. Por que o prefixo "in-" pode ter sentidos diferentes dependendo da palavra? Dê exemplos.</p>
+        <textarea placeholder="Escreva sua resposta aqui..." oninput="checkFields(5)"></textarea>
+        <div class="resp-modelo"><div class="resp-modelo-label">📋 RESPOSTA MODELO</div><p>O prefixo "in-" pode ter dois sentidos: 1) Negação/privação — como em "infeliz" (não feliz), "inacabado" (não acabado), "incansável" (que não cansa). 2) Movimento para dentro — como em "injetor" (que injeta para dentro), "ingerir" (levar para dentro), "incluir" (colocar dentro). Isso acontece porque o prefixo tem origens diferentes no latim, com significados distintos.</p></div>
+        <div class="autoaval"><button class="btn-aval" onclick="avaliar(5,0,'ok',this)">✅ Acertei</button><button class="btn-aval" onclick="avaliar(5,0,'rev',this)">📝 Preciso revisar</button></div>
+      </div>
+      <div class="pergunta" data-p="5-1">
+        <p>2. Identifique o prefixo e seu significado nas palavras: anarquia, hipermercado, perímetro, vice-prefeito.</p>
+        <textarea placeholder="Escreva sua resposta aqui..." oninput="checkFields(5)"></textarea>
+        <div class="resp-modelo"><div class="resp-modelo-label">📋 RESPOSTA MODELO</div><p>Anarquia: prefixo "a(n)-" = negação, privação (sem governo). Hipermercado: prefixo "hiper-" = excesso, posição superior (mercado muito grande). Perímetro: prefixo "peri-" = movimento em torno (medida ao redor). Vice-prefeito: prefixo "vice-" = posição inferior, substituto (aquele que está abaixo do prefeito).</p></div>
+        <div class="autoaval"><button class="btn-aval" onclick="avaliar(5,1,'ok',this)">✅ Acertei</button><button class="btn-aval" onclick="avaliar(5,1,'rev',this)">📝 Preciso revisar</button></div>
+      </div>
+      <button class="btn-conferir" disabled onclick="conferir(5)">Conferir Minhas Respostas</button>
+    </div>
+  </div>
+</div>
+
+<!-- BLOCO 7 — Sufixos -->
+<div class="bloco" data-cor="azul" data-bloco="6">
+  <div class="bloco-header" onclick="toggleBloco(6)">
+    <div class="bloco-num">7</div>
+    <div class="bloco-titulo">Afixos — Sufixos</div>
+    <span class="bloco-check">✓</span>
+    <span class="bloco-arrow">▼</span>
+  </div>
+  <div class="bloco-body">
+    <div class="bloco-inner">
+      <div class="texto-box">
+        Os <strong>sufixos</strong> são morfemas colocados depois do radical. Diferentemente dos prefixos, eles normalmente <strong>mudam a classe gramatical</strong> da palavra. Existem sufixos formadores de <strong>verbos</strong> (-ear, -ejar, -izar, -ificar), <strong>substantivos</strong> (-ção, -mento, -eiro, -ista, -ismo) e <strong>adjetivos</strong> (-oso, -ivo, -ável, -ico). Há também o sufixo formador de <strong>advérbios</strong>: "-mente", que se junta a adjetivos para indicar modo, dúvida, intensidade, tempo etc. Ex.: casar → casamento, casa<em>menteira</em>; terra → terreno, terr<em>áqueo</em>.
+      </div>
+      <div class="resp-label">✏️ Responda</div>
+      <div class="pergunta" data-p="6-0">
+        <p>1. Qual é a principal diferença entre o que os prefixos e os sufixos fazem com a palavra?</p>
+        <textarea placeholder="Escreva sua resposta aqui..." oninput="checkFields(6)"></textarea>
+        <div class="resp-modelo"><div class="resp-modelo-label">📋 RESPOSTA MODELO</div><p>A principal diferença é que o prefixo geralmente muda apenas o sentido da palavra sem alterar sua classe gramatical (ex.: feliz → infeliz, ambos adjetivos). Já o sufixo normalmente muda a classe gramatical da palavra (ex.: feliz [adjetivo] → felizmente [advérbio]; casa [substantivo] → caseiro [adjetivo]).</p></div>
+        <div class="autoaval"><button class="btn-aval" onclick="avaliar(6,0,'ok',this)">✅ Acertei</button><button class="btn-aval" onclick="avaliar(6,0,'rev',this)">📝 Preciso revisar</button></div>
+      </div>
+      <div class="pergunta" data-p="6-1">
+        <p>2. Considerando o sufixo diminutivo "-inha", explique a diferença de sentido entre "casinha" e "galinha".</p>
+        <textarea placeholder="Escreva sua resposta aqui..." oninput="checkFields(6)"></textarea>
+        <div class="resp-modelo"><div class="resp-modelo-label">📋 RESPOSTA MODELO</div><p>Em "casinha", o sufixo "-inha" tem sentido de diminutivo (casa pequena) ou afetivo (carinho pela casa). Já em "galinha", o "-inha" não funciona como diminutivo — a palavra "galinha" é a forma padrão do animal, não é uma "gala pequena". Quando o sufixo diminutivo já está incorporado ao significado da palavra, ele perde sua função original de diminuição.</p></div>
+        <div class="autoaval"><button class="btn-aval" onclick="avaliar(6,1,'ok',this)">✅ Acertei</button><button class="btn-aval" onclick="avaliar(6,1,'rev',this)">📝 Preciso revisar</button></div>
+      </div>
+      <button class="btn-conferir" disabled onclick="conferir(6)">Conferir Minhas Respostas</button>
+    </div>
+  </div>
+</div>
+
+<!-- BLOCO 8 — O poder dos afixos: sentido e expressão -->
+<div class="bloco" data-cor="rosa" data-bloco="7">
+  <div class="bloco-header" onclick="toggleBloco(7)">
+    <div class="bloco-num">8</div>
+    <div class="bloco-titulo">O poder dos afixos: sentido e expressão</div>
+    <span class="bloco-check">✓</span>
+    <span class="bloco-arrow">▼</span>
+  </div>
+  <div class="bloco-body">
+    <div class="bloco-inner">
+      <div class="texto-box">
+        O uso de afixos transforma o sentido de uma palavra. Esses morfemas não são aleatórios — vêm carregados de sentido e <strong>redefinem aquilo que a palavra comunica</strong>. Veja a diferença: <em>Re</em>formar, <em>Trans</em>formar, <em>De</em>formar, <em>In</em>formar — o radical é o mesmo ("formar"), mas o sentido muda completamente com cada prefixo. O mesmo vale para sufixos: "bancário" e "banqueiro" — quem é o mais rico? "Embaixadora" e "embaixatriz" — quem desempenha a função? A escolha de cada afixo depende da <strong>intenção de quem comunica</strong>.
+      </div>
+      <div class="resp-label">✏️ Responda</div>
+      <div class="pergunta" data-p="7-0">
+        <p>1. Aplique prefixos ao verbo "ter" e forme cinco verbos derivados. Indique o sentido que cada prefixo acrescenta.</p>
+        <textarea placeholder="Escreva sua resposta aqui..." oninput="checkFields(7)"></textarea>
+        <div class="resp-modelo"><div class="resp-modelo-label">📋 RESPOSTA MODELO</div><p>1) Conter (com- = junto, restrição) — segurar junto, restringir. 2) Deter (de- = parar, afastar) — parar, prender. 3) Manter (man- = mão, permanência) — conservar, sustentar. 4) Obter (ob- = diante de) — conseguir, alcançar. 5) Reter (re- = de volta) — segurar de volta, guardar. Cada prefixo transforma completamente o significado do verbo "ter".</p></div>
+        <div class="autoaval"><button class="btn-aval" onclick="avaliar(7,0,'ok',this)">✅ Acertei</button><button class="btn-aval" onclick="avaliar(7,0,'rev',this)">📝 Preciso revisar</button></div>
+      </div>
+      <div class="pergunta" data-p="7-1">
+        <p>2. Explique a diferença de sentido entre "consumidor" e "consumista". Que sufixo diferencia as duas?</p>
+        <textarea placeholder="Escreva sua resposta aqui..." oninput="checkFields(7)"></textarea>
+        <div class="resp-modelo"><div class="resp-modelo-label">📋 RESPOSTA MODELO</div><p>"Consumidor" usa o sufixo "-dor" (agente — aquele que consome, sentido neutro, apenas indica quem pratica a ação). "Consumista" usa o sufixo "-ista" (que indica alguém que segue um comportamento de forma excessiva ou ideológica — aquele que consome de forma exagerada, compulsiva). A diferença está na carga de valor que cada sufixo carrega.</p></div>
+        <div class="autoaval"><button class="btn-aval" onclick="avaliar(7,1,'ok',this)">✅ Acertei</button><button class="btn-aval" onclick="avaliar(7,1,'rev',this)">📝 Preciso revisar</button></div>
+      </div>
+      <button class="btn-conferir" disabled onclick="conferir(7)">Conferir Minhas Respostas</button>
+    </div>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<!-- TELA FINAL -->
+<div class="tela-final" id="telaFinal">
+  <div class="pegadinhas-card">
+    <h3>⚠️ Pegadinhas Mais Comuns na Prova</h3>
+    <ul>
+      <li><strong>Confundir derivação prefixal e sufixal com parassintética:</strong> teste sempre se a palavra existe só com o prefixo OU só com o sufixo. Se existir com apenas um → é prefixal e sufixal. Se não existir → é parassintética.</li>
+      <li><strong>Achar que todo "-inho" é diminutivo:</strong> "galinha", "rainha", "farinha" — o sufixo já está incorporado e não indica tamanho pequeno.</li>
+      <li><strong>Confundir ambiguidade lexical com fonética:</strong> lexical = problema de sentido da palavra escrita; fonética = problema de som ao falar.</li>
+      <li><strong>Esquecer que o prefixo "in-" tem dois sentidos:</strong> negação (infeliz) E movimento para dentro (ingerir). A prova adora cobrar isso!</li>
+      <li><strong>Derivação regressiva ≠ qualquer redução:</strong> é especificamente a formação de substantivos a partir de verbos (combater → combate).</li>
+      <li><strong>Derivação imprópria não muda a forma:</strong> a palavra continua igual, só muda de classe gramatical dependendo do contexto da frase.</li>
+    </ul>
+  </div>
+  <div class="stats-card">
+    <h3>📊 Suas Estatísticas</h3>
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-num green" id="statOk">0</div>
+        <div class="stat-label">✅ Acertei</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num yellow" id="statRev">0</div>
+        <div class="stat-label">📝 Revisar</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num ciano" id="statBlocos">0</div>
+        <div class="stat-label">📦 Blocos</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const TOTAL_BLOCOS = 8;
+const blocoPerguntas = [2, 2, 3, 2, 2, 2, 2, 2]; // perguntas por bloco
+let blocoState = Array.from({length: TOTAL_BLOCOS}, () => ({
+  conferido: false,
+  avaliacoes: [],
+  done: false
+}));
+let stats = { ok: 0, rev: 0, blocos: 0 };
+
+function init() {
+  const dotsEl = document.getElementById('dots');
+  for (let i = 0; i < TOTAL_BLOCOS; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.textContent = i + 1;
+    d.onclick = () => scrollToBloco(i);
+    dotsEl.appendChild(d);
+  }
+  updateProgress();
+}
+
+function toggleBloco(idx) {
+  const b = document.querySelectorAll('.bloco')[idx];
+  if (!b.classList.contains('liberado')) return;
+  b.classList.toggle('open');
+}
+
+function scrollToBloco(idx) {
+  const b = document.querySelectorAll('.bloco')[idx];
+  if (b.classList.contains('liberado')) {
+    b.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+function checkFields(blocoIdx) {
+  const b = document.querySelectorAll('.bloco')[blocoIdx];
+  const tas = b.querySelectorAll('textarea');
+  const btn = b.querySelector('.btn-conferir');
+  let allFilled = true;
+  tas.forEach(ta => { if (ta.value.trim().length < 3) allFilled = false; });
+  btn.disabled = !allFilled;
+}
+
+function conferir(blocoIdx) {
+  const b = document.querySelectorAll('.bloco')[blocoIdx];
+  const perguntas = b.querySelectorAll('.pergunta');
+  perguntas.forEach(p => {
+    p.querySelector('textarea').disabled = true;
+    p.querySelector('.resp-modelo').classList.add('show');
+    p.querySelector('.autoaval').classList.add('show');
+  });
+  b.querySelector('.btn-conferir').style.display = 'none';
+  blocoState[blocoIdx].conferido = true;
+  blocoState[blocoIdx].avaliacoes = new Array(blocoPerguntas[blocoIdx]).fill(null);
+}
+
+function avaliar(blocoIdx, pergIdx, tipo, btn) {
+  const p = btn.closest('.pergunta');
+  const btns = p.querySelectorAll('.btn-aval');
+  btns.forEach(b => { b.classList.remove('selected-ok','selected-rev'); b.disabled = true; });
+  if (tipo === 'ok') {
+    btn.classList.add('selected-ok');
+  } else {
+    btn.classList.add('selected-rev');
+  }
+  blocoState[blocoIdx].avaliacoes[pergIdx] = tipo;
+
+  // Verificar se todas as perguntas do bloco foram avaliadas
+  const all = blocoState[blocoIdx].avaliacoes;
+  if (all.every(a => a !== null)) {
+    completeBloco(blocoIdx);
+  }
+}
+
+function completeBloco(idx) {
+  blocoState[idx].done = true;
+  const b = document.querySelectorAll('.bloco')[idx];
+  b.classList.add('done');
+
+  // Contar stats
+  const avals = blocoState[idx].avaliacoes;
+  avals.forEach(a => { if (a === 'ok') stats.ok++; else stats.rev++; });
+  stats.blocos++;
+
+  // Liberar próximo bloco
+  if (idx + 1 < TOTAL_BLOCOS) {
+    const next = document.querySelectorAll('.bloco')[idx + 1];
+    next.classList.add('liberado');
+    setTimeout(() => {
+      next.classList.add('open');
+      next.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 400);
+  }
+
+  // Fechar bloco atual
+  setTimeout(() => { b.classList.remove('open'); }, 300);
+
+  updateProgress();
+
+  // Se for o último
+  if (idx === TOTAL_BLOCOS - 1) {
+    showFinal();
+  }
+}
+
+function updateProgress() {
+  const done = stats.blocos;
+  const pct = (done / TOTAL_BLOCOS) * 100;
+  document.getElementById('barFill').style.width = pct + '%';
+  document.getElementById('barLabel').textContent = done + '/' + TOTAL_BLOCOS;
+
+  const dots = document.querySelectorAll('.dot');
+  dots.forEach((d, i) => {
+    d.classList.remove('active', 'done');
+    if (blocoState[i].done) d.classList.add('done');
+    else if (document.querySelectorAll('.bloco')[i].classList.contains('liberado')) d.classList.add('active');
+  });
+}
+
+function showFinal() {
+  document.getElementById('statOk').textContent = stats.ok;
+  document.getElementById('statRev').textContent = stats.rev;
+  document.getElementById('statBlocos').textContent = stats.blocos;
+  const tf = document.getElementById('telaFinal');
+  tf.classList.add('show');
+  setTimeout(() => tf.scrollIntoView({ behavior: 'smooth', block: 'start' }), 600);
+}
+
+init();
+</script>
+</body>
+</html>
